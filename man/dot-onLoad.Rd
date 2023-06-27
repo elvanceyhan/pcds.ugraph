@@ -18,5 +18,5 @@ invisible()
 .onLoad getOption package settings
 }
 \examples{
-getOption("pcds.name")
+getOption("pcds.ugraph.name")
 }

@@ -27,20 +27,20 @@
 #' @return invisible()
 #'
 #' @examples
-#' getOption("pcds.name")
+#' getOption("pcds.ugraph.name")
 .onLoad <- function(libname, pkgname) {
   op <- options()
-  op.pcds <- list(
+  op.pcds.ugraph <- list(
     #pcds.path = "~/R-dev",
-    pcds.install.args  = "",
-    pcds.name          = "Elvan Ceyhan",
-    pcds.desc.author   = "Elvan Ceyhan <elvanceyhan@gmail.com> [aut, cre]",
-    pcds.desc.license  = "GPL-2",
-    pcds.desc.suggests = NULL,
-    pcds.desc          = list()
+    pcds.ugraph.install.args  = "",
+    pcds.ugraph.name          = "Elvan Ceyhan",
+    pcds.ugraph.desc.author   = "Elvan Ceyhan <elvanceyhan@gmail.com> [aut, cre]",
+    pcds.ugraph.desc.license  = "GPL-2",
+    pcds.ugraph.desc.suggests = NULL,
+    pcds.ugraph.desc          = list()
   )
-  toset <- !(names(op.pcds) %in% names(op))
-  if (any(toset)) options(op.pcds[toset])
+  toset <- !(names(op.pcds.ugraph) %in% names(op))
+  if (any(toset)) options(op.pcds.ugraph[toset])
 
   invisible()
 }

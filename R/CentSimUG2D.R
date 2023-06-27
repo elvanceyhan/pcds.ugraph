@@ -1,40 +1,41 @@
-#PropEdgeUG2D.R;
-#Functions for Underlying or Reflexivity Graphs of PE-PCD in R^2
+#CentSimUG2D.R;
+#Functions for Underlying or Reflexivity Graphs of CS-PCD in R^2
 #################################################################
 
 #' @title The indicator for the presence of an edge from a point to another
-#' for the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' for the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' standard basic triangle case
 #'
 #' @description Returns \eqn{I(}\code{p1p2} is an edge
-#' in the underlying or reflexivity graph of PE-PCDs \eqn{)}
+#' in the underlying or reflexivity graph of CS-PCDs \eqn{)}
 #' for points \code{p1} and \code{p2} in the standard basic triangle.
 #'
 #' More specifically, when the argument \code{ugraph="underlying"}, it returns
-#' the edge indicator for the PE-PCD underlying graph,
+#' the edge indicator for the CS-PCD underlying graph,
 #' that is, returns 1 if \code{p2} is
-#' in \eqn{N_{PE}(p1,r)} **or** \code{p1} is in \eqn{N_{PE}(p2,r)},
+#' in \eqn{N_{CS}(p1,t)} or \code{p1} is in \eqn{N_{CS}(p2,t)},
 #' returns 0 otherwise.
 #' On the other hand,
 #' when \code{ugraph="reflexivity"}, it returns
-#' the edge indicator for the PE-PCD reflexivity graph,
+#' the edge indicator for the CS-PCD reflexivity graph,
 #' that is, returns 1 if \code{p2} is
-#' in \eqn{N_{PE}(p1,r)} **and** \code{p1} is in \eqn{N_{PE}(p2,r)},
+#' in \eqn{N_{CS}(p1,t)} and \code{p1} is in \eqn{N_{CS}(p2,t)},
 #' returns 0 otherwise.
 #'
-#' In both cases \eqn{N_{PE}(x,r)} is the PE proximity region for point \eqn{x}
-#' with expansion parameter \eqn{r \ge 1}.
-#' PE proximity region is defined
+#' In both cases \eqn{N_{CS}(x,t)} is the CS proximity region for point \eqn{x}
+#' with expansion parameter \eqn{t > 0}.
+#' CS proximity region is defined
 #' with respect to the standard basic triangle \eqn{T_b=T((0,0),(1,0),(c_1,c_2))}
 #' where \eqn{c_1} is
 #' in \eqn{[0,1/2]}, \eqn{c_2>0} and \eqn{(1-c_1)^2+c_2^2 \le 1}.
 #'
-#' Vertex regions are based on the center, \eqn{M=(m_1,m_2)} in Cartesian coordinates
-#' or \eqn{M=(\alpha,\beta,\gamma)} in barycentric coordinates
-#' in the interior of the standard basic triangle \eqn{T_b}
-#' or based on circumcenter of \eqn{T_b};
-#' default is \eqn{M=(1,1,1)} i.e., the center of mass of \eqn{T_b}.
+#' Edge regions are based on the center, \eqn{M=(m_1,m_2)}
+#' in Cartesian coordinates or \eqn{M=(\alpha,\beta,\gamma)} in
+#' barycentric coordinates
+#' in the interior of the standard basic triangle \eqn{T_b};
+#' default is \eqn{M=(1,1,1)},
+#' i.e., the center of mass of \eqn{T_b}.
 #'
 #' If \code{p1} and \code{p2} are distinct
 #' and either of them are outside \eqn{T_b}, it returns 0,
@@ -51,33 +52,31 @@
 #' See also
 #' (\insertCite{ceyhan:Phd-thesis,ceyhan:comp-geo-2010,ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
-#' @param p1 A 2D point whose PE proximity region is constructed.
+#' @param p1 A 2D point whose CS proximity region is constructed.
 #' @param p2 A 2D point. The function determines
 #' whether there is an edge from \code{p1} to \code{p2} or not
-#' in the underlying or reflexivity graph of PE-PCDs.
-#' @param r A positive real number
+#' in the underlying or reflexivity graphs of CS-PCDs.
+#' @param t A positive real number
 #' which serves as the expansion parameter
-#' in PE proximity region; must be \eqn{\ge 1}
+#' in CS proximity region; must be \eqn{> 0}
 #' @param c1,c2 Positive real numbers
 #' which constitute the vertex of the standard basic triangle
 #' adjacent to the shorter edges;
 #' \eqn{c_1} must be in \eqn{[0,1/2]}, \eqn{c_2>0} and \eqn{(1-c_1)^2+c_2^2 \le 1}.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
-#' which serves as a center in the interior of the standard basic triangle
-#' or circumcenter of \eqn{T_b}
-#' which may be entered as "CC" as well;
+#' which serves as a center in the interior of the standard basic triangle;
 #' default is \eqn{M=(1,1,1)} i.e., the center of mass of \eqn{T_b}.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return Returns 1 if there is an edge between points \code{p1} and \code{p2}
-#' in the underlying or reflexivity graph of PE-PCDs
+#' in the underlying or reflexivity graph of CS-PCDs
 #' in the standard basic triangle, and 0 otherwise.
 #'
-#' @seealso \code{\link{IedgePEtri}}, \code{\link{IedgeASbasic.tri}},
-#' \code{\link{IedgeCSbasic.tri}} and \code{\link[pcds]{IarcPEbasic.tri}}
+#' @seealso \code{\link{IedgeCStri}}, \code{\link{IedgeASbasic.tri}},
+#' \code{\link{IedgePEbasic.tri}} and \code{\link[pcds]{IarcCSbasic.tri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -92,30 +91,29 @@
 #'
 #' M<-as.numeric(pcds::runif.basic.tri(1,c1,c2)$g)
 #'
-#' r<-1.5
-#' set.seed(4)
+#' t<-1.5
 #'
 #' P1<-as.numeric(pcds::runif.basic.tri(1,c1,c2)$g)
 #' P2<-as.numeric(pcds::runif.basic.tri(1,c1,c2)$g)
-#' IedgePEbasic.tri(P1,P2,r,c1,c2,M)
-#' IedgePEbasic.tri(P1,P2,r,c1,c2,M,ugraph = "reflexivity")
+#' IedgeCSbasic.tri(P1,P2,t,c1,c2,M)
+#' IedgeCSbasic.tri(P1,P2,t,c1,c2,M,ugraph = "reflexivity")
 #'
 #' P1<-c(.4,.2)
 #' P2<-c(.5,.26)
-#' IedgePEbasic.tri(P1,P2,r,c1,c2,M)
-#' IedgePEbasic.tri(P1,P2,r,c1,c2,M,ugraph = "reflexivity")
+#' IedgeCSbasic.tri(P1,P2,t=2,c1,c2,M)
+#' IedgeCSbasic.tri(P1,P2,t=2,c1,c2,M,ugraph="a")
 #' }
 #'
-#' @export IedgePEbasic.tri
-IedgePEbasic.tri <- function(p1,p2,r,c1,c2,M=c(1,1,1),
+#' @export IedgeCSbasic.tri
+IedgeCSbasic.tri <- function(p1,p2,t,c1,c2,M=c(1,1,1),
                              ugraph=c("underlying", "reflexivity"))
 {
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
     stop("ugraph must be one of \"underlying\" or \"reflexivity\"")
 
-  arc12 = pcds::IarcPEbasic.tri(p1,p2,r,c1,c2,M)
-  arc21 = pcds::IarcPEbasic.tri(p2,p1,r,c1,c2,M)
+  arc12 = pcds::IarcCSbasic.tri(p1,p2,t,c1,c2,M)
+  arc21 = pcds::IarcCSbasic.tri(p2,p1,t,c1,c2,M)
 
   edge = ifelse(ugraph == "underlying",
                 max(arc12,arc21),
@@ -127,37 +125,36 @@ IedgePEbasic.tri <- function(p1,p2,r,c1,c2,M=c(1,1,1),
 #################################################################
 
 #' @title The indicator for the presence of an edge from a point to another
-#' for the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' for the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' standard equilateral triangle case
 #'
 #' @description Returns \eqn{I(}\code{p1p2} is an edge
-#' in the underlying or reflexivity graph of PE-PCDs \eqn{)}
+#' in the underlying or reflexivity graph of CS-PCDs \eqn{)}
 #' for points \code{p1} and \code{p2} in the standard equilateral triangle.
 #'
-#' More specifically,
-#' when the argument \code{ugraph="underlying"}, it returns
+#' More specifically, when the argument \code{ugraph="underlying"}, it returns
 #' the edge indicator for points \code{p1} and \code{p2}
 #' in the standard equilateral triangle,
-#' for the PE-PCD underlying graph,
+#' for the CS-PCD underlying graph,
 #' that is, returns 1 if \code{p2} is
-#' in \eqn{N_{PE}(p1,r)} **or** \code{p1} is in \eqn{N_{PE}(p2,r)},
+#' in \eqn{N_{CS}(p1,t)} or \code{p1} is in \eqn{N_{CS}(p2,t)},
 #' returns 0 otherwise.
 #' On the other hand,
 #' when \code{ugraph="reflexivity"}, it returns
 #' the edge indicator for points \code{p1} and \code{p2}
 #' in the standard equilateral triangle,
-#' for the PE-PCD reflexivity graph,
+#' for the CS-PCD reflexivity graph,
 #' that is, returns 1 if \code{p2} is
-#' in \eqn{N_{PE}(p1,r)} **and** \code{p1} is in \eqn{N_{PE}(p2,r)},
+#' in \eqn{N_{CS}(p1,t)} and \code{p1} is in \eqn{N_{CS}(p2,t)},
 #' returns 0 otherwise.
 #'
-#' In both cases \eqn{N_{PE}(x,r)} is the PE proximity region
-#' for point \eqn{x} with expansion parameter \eqn{r \ge 1}.
-#' PE proximity region is defined
+#' In both cases \eqn{N_{CS}(x,t)} is the CS proximity region
+#' for point \eqn{x} with expansion parameter \eqn{t > 0}.
+#' CS proximity region is defined
 #' with respect to the standard equilateral triangle
 #' \eqn{T_e=T(v=1,v=2,v=3)=T((0,0),(1,0),(1/2,\sqrt{3}/2))}
-#' and vertex regions are based on the center \eqn{M=(m_1,m_2)}
+#' and edge regions are based on the center \eqn{M=(m_1,m_2)}
 #' in Cartesian coordinates or \eqn{M=(\alpha,\beta,\gamma)}
 #' in barycentric coordinates in the interior of \eqn{T_e};
 #' default is \eqn{M=(1,1,1)} i.e., the center of mass of \eqn{T_e}.
@@ -170,30 +167,28 @@ IedgePEbasic.tri <- function(p1,p2,r,c1,c2,M=c(1,1,1),
 #' See also
 #' (\insertCite{ceyhan:Phd-thesis,ceyhan:comp-geo-2010,ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
-#' @param p1 A 2D point whose PE proximity region is constructed.
+#' @param p1 A 2D point whose CS proximity region is constructed.
 #' @param p2 A 2D point. The function determines
 #' whether there is an edge from \code{p1} to \code{p2} or not
-#' in the underlying or reflexivity graph of PE-PCDs.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' in the underlying or reflexivity graphs of CS-PCDs.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
 #' which serves as a center
 #' in the interior of the standard equilateral triangle \eqn{T_e};
 #' default is \eqn{M=(1,1,1)} i.e.
 #' the center of mass of \eqn{T_e}.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph,
-#' and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return Returns 1 if there is an edge between points \code{p1} and \code{p2}
-#' in the underlying or reflexivity graph of PE-PCDs
+#' in the underlying or reflexivity graph of CS-PCDs
 #' in the standard equilateral triangle, and 0 otherwise.
 #'
-#' @seealso \code{\link{IedgePEbasic.tri}}, \code{\link{IedgePEtri}},
-#' and \code{\link[pcds]{IarcPEstd.tri}}
+#' @seealso \code{\link{IedgeCSbasic.tri}}, \code{\link{IedgeCStri}},
+#' and \code{\link[pcds]{IarcCSstd.tri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -209,46 +204,45 @@ IedgePEbasic.tri <- function(p1,p2,r,c1,c2,M=c(1,1,1),
 #' set.seed(1)
 #' Xp<-pcds::runif.std.tri(n)$gen.points
 #'
-#' M<-as.numeric(pcds::runif.std.tri(1)$g) #try also M<-c(.6,.2)
+#' M<-as.numeric(pcds::runif.std.tri(1)$g)  #try also M<-c(.6,.2)
 #'
-#' IedgePEstd.tri(Xp[1,],Xp[3,],r=1.5,M)
-#' IedgePEstd.tri(Xp[1,],Xp[3,],r=1.5,M,ugraph="reflexivity")
+#' IedgeCSstd.tri(Xp[1,],Xp[3,],t=1.5,M)
+#' IedgeCSstd.tri(Xp[1,],Xp[3,],t=1.5,M,ugraph="reflexivity")
 #'
 #' P1<-c(.4,.2)
 #' P2<-c(.5,.26)
-#' r<-2
-#' IedgePEstd.tri(P1,P2,r,M)
-#' IedgePEstd.tri(P1,P2,r,M,ugraph = "reflexivity")
+#' t<-2
+#' IedgeCSstd.tri(P1,P2,t,M)
+#' IedgeCSstd.tri(P1,P2,t,M,ugraph = "reflexivity")
 #' }
 #'
-#' @export IedgePEstd.tri
-IedgePEstd.tri <- function(p1,p2,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export IedgeCSstd.tri
+IedgeCSstd.tri <- function(p1,p2,t,M=c(1,1,1),
+                           ugraph=c("underlying", "reflexivity"))
 {
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
     stop("ugraph must be one of \"underlying\" or \"reflexivity\"")
 
-  arc12 = pcds::IarcPEstd.tri(p1,p2,r,M)
-  arc21 = pcds::IarcPEstd.tri(p2,p1,r,M)
+  arc12 = pcds::IarcCSstd.tri(p1,p2,t,M)
+  arc21 = pcds::IarcCSstd.tri(p2,p1,t,M)
 
-  edge = ifelse(ugraph == "underlying",
-                max(arc12,arc21),
-                arc12*arc21)
+  edge = ifelse(ugraph == "underlying",max(arc12,arc21),arc12*arc21)
   edge
 } #end of the function
 #'
 
 #################################################################
 
-#' @title Number of edges in the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' @title Number of edges in the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' standard equilateral triangle case
 #'
 #' @description
 #' An object of class \code{"NumEdges"}.
 #' Returns the number of edges of
-#' the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs)
+#' the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs)
 #' whose vertices are the
 #' given 2D numerical data set, \code{Xp}
 #' in the standard equilateral triangle.
@@ -256,11 +250,11 @@ IedgePEstd.tri <- function(p1,p2,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 #' (i.e., number of data points inside the triangle)
 #' and indices of the data points that reside in the triangle.
 #'
-#' PE proximity region \eqn{N_{PE}(x,r)} is defined
+#' CS proximity region \eqn{N_{CS}(x,t)} is defined
 #' with respect to the standard equilateral triangle
 #' \eqn{T_e=T(v=1,v=2,v=3)=T((0,0),(1,0),(1/2,\sqrt{3}/2))}
-#' with expansion parameter \eqn{r \ge 1}
-#' and vertex regions are based on the center \eqn{M=(m_1,m_2)}
+#' with expansion parameter \eqn{t > 0}
+#' and edge regions are based on the center \eqn{M=(m_1,m_2)}
 #' in Cartesian coordinates or \eqn{M=(\alpha,\beta,\gamma)}
 #' in barycentric coordinates in the interior of \eqn{T_e};
 #' default is \eqn{M=(1,1,1)}, i.e., the center of mass of \eqn{T_e}.
@@ -271,39 +265,37 @@ IedgePEstd.tri <- function(p1,p2,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 #'
 #' @param Xp A set of 2D points
 #' which constitute the vertices of the underlying
-#' or reflexivity graphs based on the PE-PCD.
-#' @param r A positive real number
-#' which serves as the expansion parameter for PE proximity region;
-#' must be \eqn{\ge 1}.
+#' or reflexivity graphs based on the CS-PCD.
+#' @param t A positive real number
+#' which serves as the expansion parameter for CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
 #' which serves as a center
 #' in the interior of the standard equilateral triangle \eqn{T_e};
 #' default is \eqn{M=(1,1,1)} i.e.
 #' the center of mass of \eqn{T_e}.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph,
-#' and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return A \code{list} with the elements
 #' \item{desc}{A short description of the output: number of edges
 #' and quantities related to the standard equilateral triangle}
-#' \item{und.graph}{Type of the graph as "Underlying"
-#' or "Reflexivity" for the PE-PCD}
+#' \item{und.graph}{Type of the graph as "Underlying" or "Reflexivity" for the CS-PCD}
 #' \item{num.edges}{Number of edges of the underlying
-#' or reflexivity graphs based on the PE-PCD
+#' or reflexivity graphs based on the CS-PCD
 #' with vertices in the standard equilateral triangle \eqn{T_e}}
 #' \item{num.in.tri}{Number of \code{Xp} points
 #' in the standard equilateral triangle, \eqn{T_e}}
 #' \item{ind.in.tri}{The vector of indices of the \code{Xp} points
 #' that reside in \eqn{T_e}}
-#' \item{tess.points}{Tessellation points, i.e., points on which the tessellation of the study region is performed,
+#' \item{tess.points}{Tessellation points,
+#' i.e., points on which the tessellation of the study region is performed,
 #' here, tessellation is the support triangle \eqn{T_e}.}
 #' \item{vertices}{Vertices of the underlying or reflexivity graph, \code{Xp}.}
 #'
-#' @seealso \code{\link{num.edgesPEtri}}, \code{\link{num.edgesPE}},
-#' and \code{\link[pcds]{num.arcsPEstd.tri}}
+#' @seealso \code{\link{num.edgesCStri}}, \code{\link{num.edgesCS}},
+#' and \code{\link[pcds]{num.arcsCSstd.tri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -320,15 +312,16 @@ IedgePEstd.tri <- function(p1,p2,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 #'
 #' M<-c(.6,.2)  #try also M<-c(1,1,1)
 #'
-#' Nedges = num.edgesPEstd.tri(Xp,r=1.25,M)
-#' #try also Nedges = num.edgesPEstd.tri(Xp,r=1.25,M,ugraph = "reflexivity")
+#' Nedges = num.edgesCSstd.tri(Xp,t=1.5,M)
+#' #try also Nedges = num.edgesCSstd.tri(Xp,t=1.5,M,ugraph = "reflexivity")
 #' Nedges
 #' summary(Nedges)
 #' plot(Nedges)
 #' }
 #'
-#' @export num.edgesPEstd.tri
-num.edgesPEstd.tri <- function(Xp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export num.edgesCSstd.tri
+num.edgesCSstd.tri <- function(Xp,t,M=c(1,1,1),
+                               ugraph=c("underlying", "reflexivity"))
 {
   if (!is.numeric(as.matrix(Xp)))
   {stop('Xp must be numeric')}
@@ -341,12 +334,12 @@ num.edgesPEstd.tri <- function(Xp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
   {stop('Xp must be of dimension nx2')}
   }
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
   if (!pcds::is.point(M) && !pcds::is.point(M,3))
   {stop('M must be a numeric 2D point for Cartesian coordinates or
-  3D point for barycentric coordinates ')}
+        3D point for barycentric coordinates')}
 
   A<-c(0,0); B<-c(1,0); C<-c(1/2,sqrt(3)/2);
   Te<-rbind(A,B,C);
@@ -382,7 +375,7 @@ num.edgesPEstd.tri <- function(Xp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
       {edges<-edges+0
       } else
       {
-        edges<-edges+IedgePEstd.tri(p1,p2,r,M,ugraph)
+        edges<-edges+IedgeCSstd.tri(p1,p2,t,M,ugraph)
       }
       }
     }
@@ -393,12 +386,12 @@ num.edgesPEstd.tri <- function(Xp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 
   und.graph = ifelse(ugraph=="underlying","Underlying", "Reflexivity")
   desc<-paste("Number of Edges of the ",und.graph,
-              " Graphs of the PE-PCD and the Related Quantities with vertices Xp in the Standard Equilateral Triangle",sep="")
+              " Graphs of the CS-PCD and the Related Quantities with vertices Xp in the Standard Equilateral Triangle",sep="")
 
   res<-list(desc=desc, #description of the output
             und.graph = und.graph, #"Underlying" or "Reflexivity"
             num.edges=edges-n, # -n is to avoid loops
-            #number of edges for the underlying or reflexivity graph of the PE-PCD
+            #number of edges for the underlying or reflexivity graph of the CS-PCD
             num.in.tri=NinTri, # number of Xp points in CH of Yp points
             ind.in.tri=ind.in.tri, #indices of data points inside the triangle
             tess.points=Te, #tessellation points
@@ -414,19 +407,19 @@ num.edgesPEstd.tri <- function(Xp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 
 #################################################################
 
-#' @title Incidence matrix for the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' @title Incidence matrix for the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' standard equilateral triangle case
 #'
 #' @description Returns the incidence matrix
-#' for the underlying or reflexivity graph of the PE-PCD
+#' for the underlying or reflexivity graphs of the CS-PCD
 #' whose vertices are the given 2D numerical data set, \code{Xp},
 #' in the standard equilateral triangle
 #' \eqn{T_e=T(v=1,v=2,v=3)=T((0,0),(1,0),(1/2,\sqrt{3}/2))}.
 #'
-#' PE proximity region is constructed
+#' CS proximity region is constructed
 #' with respect to the standard equilateral triangle \eqn{T_e} with
-#' expansion parameter \eqn{r \ge 1} and vertex regions are based on
+#' expansion parameter \eqn{t > 0} and edge regions are based on
 #' the center \eqn{M=(m_1,m_2)} in Cartesian coordinates
 #' or \eqn{M=(\alpha,\beta,\gamma)} in barycentric coordinates
 #' in the interior of \eqn{T_e}; default is \eqn{M=(1,1,1)},
@@ -438,29 +431,28 @@ num.edgesPEstd.tri <- function(Xp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 #' (\insertCite{ceyhan:Phd-thesis,ceyhan:comp-geo-2010,ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
 #' @param Xp A set of 2D points
-#' which constitute the vertices of the underlying or reflexivity graph of the PE-PCD.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' which constitute the vertices of the underlying or reflexivity graphs of the CS-PCD.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
 #' which serves as a center
 #' in the interior of the standard equilateral triangle \eqn{T_e};
 #' default is \eqn{M=(1,1,1)} i.e.
 #' the center of mass of \eqn{T_e}.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph,
 #' and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
-#' @return Incidence matrix for the underlying or reflexivity graph
-#' of the PE-PCD with vertices
+#' @return Incidence matrix for the underlying or reflexivity graphs
+#' of the CS-PCD with vertices
 #' being 2D data set, \code{Xp}
-#' in the standard equilateral triangle where PE proximity
-#' regions are defined with \code{M}-vertex regions.
+#' in the standard equilateral triangle where CS proximity
+#' regions are defined with \code{M}-edge regions.
 #'
-#' @seealso \code{\link{inci.mat.undPEtri}}, \code{\link{inci.mat.undPE}},
-#' and \code{\link[pcds]{inci.matPEstd.tri}}
+#' @seealso \code{\link{inci.mat.undCStri}}, \code{\link{inci.mat.undCS}},
+#' and \code{\link[pcds]{inci.matCSstd.tri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -478,19 +470,19 @@ num.edgesPEstd.tri <- function(Xp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 #'
 #' M<-as.numeric(pcds::runif.std.tri(1)$g)  #try also M<-c(.6,.2)
 #'
-#' inc.mat<-inci.mat.undPEstd.tri(Xp,r=1.25,M)
-#' #try also inc.mat<-inci.mat.undPEstd.tri(Xp,r=1.25,M,ugraph="reflexivity")
+#' inc.mat<-inci.mat.undCSstd.tri(Xp,t=1.5,M)
+#' #try also inc.mat<-inci.mat.undCSstd.tri(Xp,t=1.5,M,ugraph="reflexivity")
 #' inc.mat
 #' (sum(inc.mat)-n)/2
-#' num.edgesPEstd.tri(Xp,r=1.25,M)$num.edges
-#' #try also num.edgesPEstd.tri(Xp,r=1.25,M,ugraph="reflexivity")$num.edges
+#' num.edgesCSstd.tri(Xp,t=1.5,M)$num.edges
+#' #try also num.edgesCSstd.tri(Xp,t=1.5,M,ugraph="reflexivity")$num.edges
 #'
 #' pcds::dom.num.greedy(inc.mat)
 #' pcds::Idom.num.up.bnd(inc.mat,2) #try also pcds::dom.num.exact(inc.mat)
 #' }
 #'
-#' @export inci.mat.undPEstd.tri
-inci.mat.undPEstd.tri <- function(Xp,r,M=c(1,1,1),
+#' @export inci.mat.undCSstd.tri
+inci.mat.undCSstd.tri <- function(Xp,t,M=c(1,1,1),
                                   ugraph=c("underlying", "reflexivity"))
 {
   if (!is.numeric(as.matrix(Xp)))
@@ -504,12 +496,12 @@ inci.mat.undPEstd.tri <- function(Xp,r,M=c(1,1,1),
   {stop('Xp must be of dimension nx2')}
   }
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
   if (!pcds::is.point(M) && !pcds::is.point(M,3))
   {stop('M must be a numeric 2D point for Cartesian coordinates or
-  3D point for barycentric coordinates ')}
+        3D point for barycentric coordinates')}
 
   A<-c(0,0); B<-c(1,0); C<-c(1/2,sqrt(3)/2);
   Te<-rbind(A,B,C);
@@ -528,9 +520,9 @@ inci.mat.undPEstd.tri <- function(Xp,r,M=c(1,1,1),
   inc.mat<-matrix(0, nrow=n, ncol=n)
   for (i in 1:n)
   {p1<-Xp[i,]
-  for (j in i:n )
+  for (j in i:n)
   {p2<-Xp[j,]
-  inc.mat[i,j]<-inc.mat[j,i]<-IedgePEstd.tri(p1,p2,r,M,ugraph)
+  inc.mat[i,j]<-inc.mat[j,i]<-IedgeCSstd.tri(p1,p2,t,M,ugraph)
   }
   }
   inc.mat
@@ -539,455 +531,289 @@ inci.mat.undPEstd.tri <- function(Xp,r,M=c(1,1,1),
 
 #################################################################
 
-# funsMuVarUndPE2D
+# funsMuVarUndCS2D
 #'
 #' @title Returns the mean and (asymptotic) variance of edge density of
-#' underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraph (PE-PCD)
+#' underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraph (CS-PCD)
 #' for 2D uniform data in one triangle
 #'
 #' @description
 #' The mean and (asymptotic) variance functions
-#' for the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs):
-#' \code{muOrPE2D} and \code{asyvarOrPE2D} for the underlying graph
+#' for the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs):
+#' \code{muOrCS2D} and \code{asyvarOrCS2D} for the underlying graph
 #' and
-#' \code{muAndPE2D} and \code{asyvarAndPE2D} for the reflexivity graph.
+#' \code{muAndCS2D} and \code{asyvarAndCS2D} for the reflexivity graph.
 #'
-#' \code{muOrPE2D} and \code{muAndPE2D} return the mean of the (edge) density of
-#' the underlying or reflexivity graph of PE-PCDs, respectively,
+#' \code{muOrCS2D} and \code{muAndCS2D} return the mean of the (edge) density of
+#' the underlying or reflexivity graphs of CS-PCDs, respectively,
 #' for 2D uniform data in a triangle.
-#' Similarly,
-#' \code{asyvarOrPE2D} and \code{asyvarAndPE2D} return the asymptotic variance
-#' of the edge density of the underlying or reflexivity graph of PE-PCDs,
-#' respectively, for 2D uniform data in a triangle.
+#' Similarly, \code{asyvarOrCS2D} and \code{asyvarAndCS2D} return the asymptotic variance
+#' of the edge density of the underlying or reflexivity graphs of CS-PCDs, respectively,
+#' for 2D uniform data in a triangle.
 #'
-#' PE proximity regions are defined with expansion parameter \eqn{r \ge 1}
+#' CS proximity regions are defined with expansion parameter \eqn{t > 0}
 #' with respect to the triangle in which the points reside and
-#' vertex regions are based on center of mass, \eqn{CM} of the triangle.
+#' edge regions are based on center of mass, \eqn{CM} of the triangle.
 #'
 #' See also (\insertCite{ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
-#' @param r A positive real number which serves
-#' as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param t A positive real number which serves
+#' as the expansion parameter in CS proximity region.
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
-#' @return \code{mu.undPE2D} returns the mean
-#' and \code{asyvarUndOrPE2D} returns the (asymptotic) variance of the
-#' edge density of the underlying graph of the PE-PCD for uniform data in any triangle
-#' if \code{ugraph="underlying"}, and those of the reflexivity graph if \code{ugraph="reflexivity"}.
-#' The functions \code{muOrPE2D}, \code{muAndPE2D}, \code{asyvarOrPE2D},
-#' and \code{asyvarAndPE2D} are the corresponding mean
-#' and asymptotic variance functions
-#' for the edge density of the reflexivity graph of the PE-PCD,
-#' respectively, for uniform data in any triangle.
+#' @return \code{mu.undCS2D} returns the mean
+#' and \code{asyvarUndOrCS2D} returns the (asymptotic) variance of the
+#' edge density of the underlying graph of the CS-PCD for uniform data in any triangle
+#' if \code{ugraph="underlying"},
+#' and those of the reflexivity graph if \code{ugraph="reflexivity"}.
+#' The functions \code{muOrCS2D}, \code{muAndCS2D}, \code{asyvarOrCS2D},
+#' and \code{asyvarAndCS2D} are the corresponding mean and asymptotic variance functions
+#' for the edge density of the reflexivity graph of the CS-PCD, respectively,
+#' for uniform data in any triangle.
 #'
-#' @name funsMuVarUndPE2D
+#' @name funsMuVarUndCS2D
 NULL
 #'
-#' @seealso #' \code{\link{mu.undCS2D}}, \code{\link{asy.var.undCS2D}},
-#' \code{\link[pcds]{muPE2D}}, \code{\link[pcds]{asyvarPE2D}},
-#' \code{\link{muAndCS2D}}, and \code{\link{asyvarAndCS2D}}
+#' @seealso \code{\link{mu.undCS2D}}, \code{\link{asy.var.undCS2D}}
+#' \code{\link[pcds]{muCS2D}}, and \code{\link[pcds]{asyvarCS2D}},
 #'
-#' @rdname funsMuVarUndPE2D
+#'
+#' @rdname funsMuVarUndCS2D
 #'
 #' @author Elvan Ceyhan
 #'
 #' @examples
 #' \dontrun{
-#' mu.undPE2D(1.2)
-#' mu.undPE2D(1.2,ugraph="r")
+#' mu.undCS2D(1.2)
+#' mu.undCS2D(1.2,ugraph="r")
 #'
-#' rseq<-seq(1.01,5,by=.05)
-#' lrseq<-length(rseq)
+#' tseq<-seq(0.01,10,by=.05)
+#' ltseq<-length(tseq)
 #'
 #' muOR = muAND <- vector()
-#' for (i in 1:lrseq)
+#' for (i in 1:ltseq)
 #' {
-#'   muOR<-c(muOR,mu.undPE2D(rseq[i]))
-#'   muAND<-c(muAND,mu.undPE2D(rseq[i],ugraph="r"))
+#'   muOR<-c(muOR,mu.undCS2D(tseq[i]))
+#'   muAND<-c(muAND,mu.undCS2D(tseq[i],ugraph="r"))
 #' }
 #'
-#' plot(rseq, muOR,type="l",xlab="r",ylab=expression(mu(r)),lty=1,
-#'      xlim=range(rseq),ylim=c(0,1))
-#' lines(rseq,muAND,type="l",lty=2,col=2)
+#' plot(tseq, muOR,type="l",xlab="t",ylab=expression(mu(t)),lty=1,
+#'      xlim=range(tseq),ylim=c(0,1))
+#' lines(tseq,muAND,type="l",lty=2,col=2)
 #' legend("bottomright", inset=.02,
-#'        legend=c(expression(mu[or](r)),expression(mu[and](r))),
+#'        legend=c(expression(mu[or](t)),expression(mu[and](t))),
 #'        lty=1:2,col=1:2)
 #' }
 #'
-#' @export muOrPE2D
-muOrPE2D<-function(r)
+#' @export muOrCS2D
+muOrCS2D<-function(t)
 {
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('The argument must be a scalar greater than 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('The argument must be a scalar greater than 0')}
 
   mn<-0;
-  if (r < 4/3)
+  if (t < 1/2)
   {
-    mn<- (-108*r^2+860*r^4-846*r^3+720*r-195*r^5-256+47*r^6)/(108*r^2*(r+2)*(r+1));
+    mn<- 2/9*t^2*(3+t^2+t)/(t+3);
   } else {
-    if (r < 3/2)
+    if (t < 1)
     {
-      mn<- (175*r^5-579*r^4-536*r+1450*r^3-732*r^2+672)/(216*r*(r+2)*(r+1));
+      mn<- 1/3*t^2*(2*t^2+11*t+9)/(t+3)/(2*t+5);
     } else {
-      if (r<2)
-      {
-        mn<- -(3*r^8-7*r^7-30*r^6+84*r^5-264*r^4+304*r^3+144*r^2-368*r+96)/(8*r^4*(r+2)*(r+1));
-      } else {
-        mn<- (r^5+r^4-6*r+2)/(r^4*(r+1));
-      }}}
+      mn<- (4*t^3+32*t^2+45*t-15)*t/(t+3)/(2*t+5)/(t+2)/(2*t+1);
+    }}
   mn
 } #end of the function
 #'
-#' @rdname funsMuVarUndPE2D
+#' @rdname funsMuVarUndCS2D
 #'
-#' @export muAndPE2D
-muAndPE2D <- function(r)
+#' @export muAndCS2D
+muAndCS2D <- function(t)
 {
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('The argument must be a scalar greater than 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('The argument must be a scalar greater than 0')}
 
   mn<-0;
-  if (r < 4/3)
+  if (t < 1/2)
   {
-    mn<- -(r-1)*(5*r^5-148*r^4+245*r^3-178*r^2-232*r+128)/(54*r^2*(r+2)*(r+1));
+    mn<- -(2*t^2 - t - 3)*t^2/(9*(3 + t));
   } else {
-    if (r < 3/2)
+    if (t < 1)
     {
-      mn<- -(101*r^5-801*r^4+1302*r^3-732*r^2-536*r+672)/(216*r*(r+2)*(r+1));
+      mn<- 2*t^2/((t + 3)*(2*t + 5));
     } else {
-      if (r<2)
-      {
-        mn<- (r^8-13*r^7+30*r^6+148*r^5-448*r^4+264*r^3+288*r^2-368*r+96)/(8*r^4*(r+2)*(r+1));
-      } else {
-        mn<- (r^3+3*r^2-2+2*r)*(r-1)^2/(r^4*(r+1));
-      }}}
+      mn<- 2*t^2/((t + 3)*(2*t + 5));
+    }}
   mn
 } #end of the function
 #'
-#' @rdname funsMuVarUndPE2D
+#' @rdname funsMuVarUndCS2D
 #'
-#' @export asy.var.undPE2D
-mu.undPE2D <-function(r,ugraph=c("underlying", "reflexivity"))
+#' @export mu.undCS2D
+mu.undCS2D <-function(t,ugraph=c("underlying", "reflexivity"))
 {
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
     stop("ugraph must be one of \"underlying\" or \"reflexivity\"")
 
-  mn = ifelse(ugraph == "underlying",muOrPE2D(r),muAndPE2D(r))
+  mn = ifelse(ugraph == "underlying",muOrCS2D(t),muAndCS2D(t))
   mn
 }
 #' @references
 #' \insertAllCited{}
 #'
-#' @rdname funsMuVarUndPE2D
+#' @rdname funsMuVarUndCS2D
 #'
 #' @examples
 #' \dontrun{
-#' asy.var.undPE2D(1.2)
-#' asy.var.undPE2D(1.2,ugraph="r")
+#' asy.var.undCS2D(1.2)
+#' asy.var.undCS2D(1.2,ugraph="r")
 #'
-#' rseq<-seq(1.01,5,by=.05)
-#' lrseq<-length(rseq)
+#' asyvarOrCS2D(.2)
+#'
+#' tseq<-seq(.05,25,by=.05)
+#' ltseq<-length(tseq)
 #'
 #' avarOR<-avarAND<-vector()
-#' for (i in 1:lrseq)
+#' for (i in 1:ltseq)
 #' {
-#'   avarOR<-c(avarOR,asy.var.undPE2D(rseq[i]))
-#'   avarAND<-c(avarAND,asy.var.undPE2D(rseq[i],ugraph="r"))
+#'   avarOR<-c(avarOR,asy.var.undCS2D(tseq[i]))
+#'   avarAND<-c(avarAND,asy.var.undCS2D(tseq[i],ugraph="r"))
 #' }
 #'
 #' par(mar=c(5,5,4,2))
-#' plot(rseq, avarAND,type="l",lty=2,col=2,xlab="r",
-#'      ylab=expression(paste(sigma^2,"(r)")),xlim=range(rseq))
-#' lines(rseq,avarOR,type="l")
-#' legend(3.75,.02,
-#'        legend=c(expression(paste(sigma["underlying"]^"2","(r)")),
-#'                  expression(paste(sigma["reflexivity"]^"2","(r)")) ),
+#' plot(tseq, 4*avarAND,type="l",lty=2,col=2,xlab="t",
+#'      ylab=expression(paste(sigma^2,"(t)")),xlim=range(tseq))
+#' lines(tseq,4*avarOR,type="l")
+#' legend(18,.1,
+#'        legend=c(expression(paste(sigma["underlying"]^"2","(t)")),
+#'                  expression(paste(sigma["reflexivity"]^"2","(t)")) ),
 #'        lty=1:2,col=1:2)
 #' }
 #'
-#' @export asyvarOrPE2D
-asyvarOrPE2D<-function(r)
+#' @export asyvarOrCS2D
+asyvarOrCS2D<-function(t)
 {
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('The argument must be a scalar greater than 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('The argument must be a scalar greater than 0')}
 
   #internal OR underlying functions for covariance (i.e. asymptotic variance)
-  PEcov.or0 <-function(r)
-  {-(1458*r^22+13122*r^21+50731*r^20-84225*r^19-19193*r^18-1823223*r^17+5576151*r^16+2978697*r^15-
-       33432692*r^14+37427862*r^13+15883834*r^12-60944766*r^11+49876417*r^10-1754523*r^9-36606859*r^8+
-       32338215*r^7-10290256*r^6-2234754*r^5+7085471*r^4-5608569*r^3+1645826*r^2-132876*r+
-       30824)/(58320*(2*r^2+1)*(r+2)^3*(r^2+1)*(r+1)^3*r^6)}
+  CScov.or0 <-function(t)
+  {2/1215*(192*t^19+1968*t^18+5048*t^17-13524*t^16-96750*t^15-153498*t^14+204921*t^13+1191711*t^12+1644184*t^11-
+             782739*t^10-5793519*t^9-6962886*t^8+2566647*t^7+16522461*t^6+17799264*t^5+449793*t^4-21194217*t^3-24944922*t^2-
+             11298042*t-1653372)/(t+3)^3/(2*t+3)/(2*t^2+6*t+3)/(2*t^2-t-3)/(t^2-t-3)/(t^2+t+3)/(t-3)/(t+2)/(2*t+1)*t^4}
 
-  PEcov.or1 <-function(r)
-  {-(1458*r^22+13122*r^21+62825*r^20-175011*r^19+156014*r^18-3300900*r^17+11053023*r^16+5055135*r^15-
-       67685050*r^14+75243552*r^13+33155180*r^12-120628524*r^11+99831906*r^10-4883958*r^9-74801558*r^8+
-       64360782*r^7-19812000*r^6-3667716*r^5+14541630*r^4-11254002*r^3+3070468*r^2-413208*r+
-       28880)/(r^2+1)/(116640*(2*r^2+1)*(r+2)^3*(r+1)^3*r^6)}
+  CScov.or1 <-function(t)
+  {-1/1215*(20480*t^24+294912*t^23+853760*t^22-8420352*t^21-67953472*t^20-100448064*t^19+697856240*t^18+
+              3143699712*t^17+1244152292*t^16-20840169012*t^15-48748490950*t^14+16404525522*t^13+228604700816*t^12+
+              301025320353*t^11-197975773249*t^10-972536561376*t^9-940947719281*t^8+253203630786*t^7+1480868308641*t^6+
+              1640646436698*t^5+980894429019*t^4+345696394563*t^3+67789274544*t^2+5712392970*t-12247200)/(4*t+5)/(2*t+3)/
+      (t+3)^3/(4*t^2+11*t+4)/(2*t^2+6*t+3)/(2*t+5)^3/(2*t-5)/(t^2-t-3)/(t+2)/(t^2-4)/(2*t+1)/(t+1)*t^3}
 
-  PEcov.or2 <-function(r)
-  {-(1458*r^22+13122*r^21+62825*r^20-175011*r^19+156014*r^18-3300900*r^17+11053023*r^16+5055135*r^15-
-       67685050*r^14+75243552*r^13+33155180*r^12-120628524*r^11+99831906*r^10-4883958*r^9-74801558*r^8+
-       64360782*r^7-19812000*r^6-3667716*r^5+14541630*r^4-11254002*r^3+3070468*r^2-413208*r+
-       28880)/(116640*(r^2+1)*(2*r^2+1)*(r+2)^3*(r+1)^3*r^6)}
-
-  PEcov.or3 <-function(r)
-  {-(972*r^24+8748*r^23+29590*r^22-149106*r^21-36820*r^20-986280*r^19+5942884*r^18+2883672*r^17-
-       47189711*r^16+43450125*r^15+85975304*r^14-156173934*r^13+27378901*r^12+123606417*r^11-152209261*r^10+
-       64653597*r^9+56621894*r^8-88962768*r^7+43754559*r^6-5940597*r^5-13006396*r^4+17019366*r^3-7037340*r^2+
-       413208*r-28880)/(58320*(r^2+1)*(2*r^2+1)*(r^2-2)*(r+2)^3*(r+1)^3*r^6)}
-
-  PEcov.or4 <-function(r)
-  {-(972*r^22+8748*r^21+31534*r^20-131610*r^19+261546*r^18-1552026*r^17+3745643*r^16+4573731*r^15-
-       29416804*r^14+26163354*r^13+19600850*r^12-43126062*r^11+31497249*r^10-7381467*r^9-22237963*r^8+
-       26778663*r^7-9107024*r^6-115074*r^5+3136927*r^4-5055609*r^3+2292994*r^2+14580*r-
-       1944)/(58320*(r^2+1)*(2*r^2+1)*(r+1)^3*(r+2)^3*r^6)}
-
-  PEcov.or5 <-function(r)
-  {(486*r^22-7290*r^21-181459*r^20+1024401*r^19-2691213*r^18+3921057*r^17+1844321*r^16-33347697*r^15+
-      80028903*r^14-29292735*r^13-98093906*r^12+125034492*r^11-46658244*r^10-57216612*r^9+88057996*r^8-
-      26383068*r^7-12851392*r^6+14179848*r^5-8656508*r^4+1593828*r^3+134136*r^2-
-      58320*r+7776)/(233280*(r^2+1)*(2*r^2+1)*(r+1)^3*(r+2)^3*r^6)}
-
-  PEcov.or6 <-function(r)
-  {(486*r^23-7776*r^22-174169*r^21+1205860*r^20-4656806*r^19+8763566*r^18+7460036*r^17-63559490*r^16+
-      91134324*r^15+18516450*r^14-122708655*r^13+18577230*r^12+80410332*r^11-19357704*r^10-39129236*r^9+
-      75311048*r^8-77449360*r^7+4053376*r^6+48283912*r^5-40690240*r^4+17736336*r^3-4315680*r^2+
-      544320*r-31104)/(233280*(r+2)^3*(r^2+1)*(2*r^2+1)*(r+1)^3*(r-1)*r^6)}
-
-  PEcov.or7 <-function(r)
-  {(2*r^24-30*r^23-161*r^22+107*r^21+4137*r^20-10685*r^19+8367*r^18+78713*r^17-450859*r^16+697707*r^15+
-      517846*r^14-3723120*r^13+6565124*r^12-1468692*r^11-8695792*r^10+9535720*r^9-6773160*r^8+526744*r^7+
-      10691376*r^6-7797264*r^5+1137696*r^4+523712*r^3-2687872*r^2+1701888*r-
-      245760)/(960*(2*r^2+1)*(r+2)^3*(r^2+1)*(r+1)^3*r^8)}
-
-  PEcov.or8 <-function(r)
-  {(2*r^25-32*r^24-129*r^23+236*r^22+4157*r^21-15610*r^20+21289*r^19+67536*r^18-511355*r^17+1161830*r^16-
-      634128*r^15-3001568*r^14+9512164*r^13-11014136*r^12+2344968*r^11+7126240*r^10-13850504*r^9+
-      14466592*r^8-3823216*r^7-4018976*r^6+5155776*r^5-4633984*r^4+1959808*r^3-244480*r^2-
-      3584*r-1024)/(960*(2*r^2+1)*(r+1)^2*(r+2)^3*(r^2+1)*r^10)}
-
-  PEcov.or9 <-function(r)
-  {(2*r^24-34*r^23-101*r^22+433*r^21+5400*r^20-26982*r^19+23049*r^18+166787*r^17-717366*r^16+1196092*r^15+
-      89468*r^14-5130844*r^13+12748688*r^12-11274744*r^11-12243496*r^10+33980568*r^9-14886656*r^8-19910592*r^7+
-      20667776*r^6-1262208*r^5-5402752*r^4+2217088*r^3-235776*r^2-2560*r-
-      1024)/(960*(2*r^2-1)*(r+2)^3*(r-1)*(r+1)^2*r^10)}
-
-  PEcov.or10 <-function(r)
-  {2*(180*r^8-48*r^7-648*r^6+396*r^5+214*r^4-190*r^3+39*r^2-4*r+1)/(15*(2*r^2-1)*(r+1)^2*r^10)}
-  ###
+  CScov.or2 <-function(t)
+  {1/30*(111431680*t^20+2820980736*t^19+32710127872*t^18+229961057152*t^17+1093143530432*t^16+3707285176320*t^15+
+           9212280477424*t^14+16915566759464*t^13+22729421834796*t^12+21484172948352*t^11+12608245109798*t^10+
+           2015653755166*t^9-3733800929869*t^8-3725129049589*t^7-1551133260126*t^6-141206916516*t^5+170413896339*t^4+
+           91611623187*t^3+21859209990*t^2+2646270000*t+131220000)/(t+3)^3/(4*t+3)^2/(2*t^2+5*t+1)^2/(t+1)/(4*t+5)/
+      (4*t^2+11*t+4)/(2*t+3)/(2*t^2+6*t+3)/(2*t+5)^3/(t+2)^2/(2*t+1)^2}
+####
   asyvar<-0;
-  if (r < 2*sqrt(3)/3)
+  if (t < 1/2)
   {
-    asyvar<-PEcov.or0(r);
+    asyvar<-CScov.or0(t);
   } else {
-    if (r < 6/5)
+    if (t < 1)
     {
-      asyvar<- PEcov.or1(r);
+      asyvar<- CScov.or1(t);
     } else {
-      if (r < sqrt(5)-1)
-      {
-        asyvar<- PEcov.or2(r);
-      } else {
-        if (r < (6+2*sqrt(2))/7)
-        {
-          asyvar<- PEcov.or3(r);
-        } else {
-          if (r < 4/3)
-          {
-            asyvar<- PEcov.or4(r);
-          } else {
-            if (r < (6+sqrt(15))/7)
-            {
-              asyvar<- PEcov.or5(r);
-            } else {
-              if (r < 3/2)
-              {
-                asyvar<- PEcov.or6(r);
-              } else {
-                if (r < (1+sqrt(5))/2)
-                {
-                  asyvar<- PEcov.or7(r);
-                } else {
-                  if (r < 1+sqrt(2)/2)
-                  {
-                    asyvar<- PEcov.or8(r);
-                  } else {
-                    if (r < 2)
-                    {
-                      asyvar<- PEcov.or9(r);
-                    } else {
-                      asyvar<- PEcov.or10(r);
-                    }}}}}}}}}}
+      asyvar<- CScov.or2(t);
+    }}
   asyvar #need to multiply this by 4 in the asymptotic approximation
 } #end of the function
 #'
-#' @rdname funsMuVarUndPE2D
+#' @rdname funsMuVarUndCS2D
 #'
-#' @export asyvarAndPE2D
-asyvarAndPE2D<-function(r)
+#' @export asyvarAndCS2D
+asyvarAndCS2D<-function(t)
 {
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('The argument must be a scalar greater than 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('The argument must be a scalar greater than 0')}
 
   #internal AND underlying functions for covariance (i.e. asymptotic variance)
-  PEcov.and0<-function(r)
-  {-(r-1)^2*(972*r^19+8748*r^18+44456*r^17+140328*r^16+121371*r^15-412117*r^14-27145*r^13-4503501*r^12+
-               1336147*r^11+10640999*r^10-982009*r^9-6677105*r^8-2274458*r^7-1150162*r^6+249126*r^5+
-               1232530*r^4+1234372*r^3+226776*r^2-184944*r-81920)/(58320*(2*r^2+1)*(r+2)^2*(r+1)^3*r^6)}
+  CScov.and0<-function(t)
+  {1/1215*(224*t^13+2112*t^12+5872*t^11+1256*t^10-7854*t^9+22378*t^8+23973*t^7-109758*t^6-82737*t^5+
+             186138*t^4+136323*t^3-132192*t^2-137781*t-30618)/(t+3)^3/(2*t^2+6*t+3)/(2*t+3)/(2*t^2-t-3)/(t+2)*t^4}
 
-  PEcov.and1<-function(r)
-  {-(486*r^21+3402*r^20-269*r^19-45155*r^18-118850*r^17+443518*r^16+3251855*r^15-13836295*r^14+
-       13434672*r^13+11140788*r^12-27667544*r^11+13293088*r^10+7159710*r^9-13013598*r^8+4185440*r^7+
-       3262952*r^6+586636*r^5-1616444*r^4-680120*r^3-55952*r^2+219936*r+
-       49152)/(116640*(2*r^2+1)*(r+2)^2*(r+1)^3*r^6)}
+  CScov.and1<-function(t)
+  {2/15*(16128*t^11+268864*t^10+1943688*t^9+7979884*t^8+20460770*t^7+33935927*t^6+36470074*t^5+
+           24743401*t^4+9992165*t^3+2141319*t^2+184113*t+135)/(4*t+5)/(2*t+3)/(t+3)^3/(4*t^2+11*t+4)/
+      (2*t^2+6*t+3)/(2*t+5)^3/(t+2)/(2*t+1)/(t+1)*t^3}
 
-  PEcov.and2<-function(r)
-  {-(486*r^21+3402*r^20-269*r^19-45155*r^18-118850*r^17+443518*r^16+2751855*r^15-13736295*r^14+
-       18084672*r^13+8770788*r^12-43009544*r^11+24604048*r^10+27137438*r^9-30889822*r^8-2832544*r^7+
-       11101160*r^6-4168820*r^5+2364868*r^4+2305864*r^3-3041936*r^2+219936*r+
-       49152)/(116640*(r+2)^2*(2*r^2+1)*(r+1)^3*r^6)}
-
-  PEcov.and3<-function(r)
-  {-(3632*r^22+25632*r^21-60328*r^20-441888*r^19+1353430*r^18-297666*r^17-4791125*r^16+12849927*r^15-
-       10894618*r^14-26295324*r^13+62283823*r^12-2280753*r^11-81700012*r^10+32551926*r^9+39974410*r^8-
-       11284026*r^7-5806580*r^6-9167580*r^5-2004944*r^4+4646688*r^3+1931776*r^2-489024*r-
-       98304)/(58320*(r+2)^3*(r^2-2)*(2*r^2+1)*(r+1)^3*r^6)}
-
-  PEcov.and4<-function(r)
-  {-(3632*r^22+25632*r^21-49432*r^20-364992*r^19+958940*r^18-1167012*r^17+1200518*r^16+5424126*r^15-
-       23566328*r^14+23837088*r^13+11797395*r^12-41623065*r^11+39261953*r^10-8239197*r^9-30178496*r^8+
-       27901506*r^7-4936170*r^6+61038*r^5+4719720*r^4-5513952*r^3+340736*r^2+23328*r+
-       65536)/(58320*(r+2)^3*(2*r^2+1)*(r^2+1)*(r+1)^3*r^6)}
-
-  PEcov.and5<-function(r)
-  {(1562*r^21-11142*r^20-103099*r^19+2105697*r^18-9774118*r^17+10220280*r^16+27825711*r^15-69243129*r^14+
-      81624200*r^13-76052574*r^12-65530400*r^11+262451196*r^10-178092280*r^9-69106464*r^8+158439568*r^7-
-      97568688*r^6+12246288*r^5+17591952*r^4-21111616*r^3+15628032*r^2-2545664*r+
-      993024)/(466560*(r+2)^3*(2*r^2+1)*(r^2+1)*(r+1)^3*r^5)}
-
-  PEcov.and6<-function(r)
-  {(1562*r^21-11142*r^20-103099*r^19+2105697*r^18-9774118*r^17+10220280*r^16+27825711*r^15-69243129*r^14+
-      81624200*r^13-76052574*r^12-65530400*r^11+262451196*r^10-178092280*r^9-69106464*r^8+158439568*r^7-
-      97568688*r^6+12246288*r^5+17591952*r^4-21111616*r^3+15628032*r^2-2545664*r+
-      993024)/(466560*(r+2)^3*(2*r^2+1)*(r^2+1)*(r+1)^3*r^5)}
-
-  PEcov.and7<-function(r)
-  {-(2*r^26-30*r^25+281*r^24-2395*r^23+8770*r^22+29528*r^21-268053*r^20+245667*r^19+2066216*r^18-
-       5313494*r^17-1589216*r^16+18512684*r^15-18946136*r^14-2665248*r^13+22789584*r^12-32987760*r^11+
-       20482512*r^10+13109584*r^9-28084416*r^8+17326976*r^7-3864576*r^6-4579328*r^5+6666240*r^4-
-       3576320*r^3+635904*r^2-116736*r+61440)/(1920*(2*r^2+1)*(r+2)^3*(r^2+1)*(r+1)^3*r^10)}
-
-  PEcov.and8<-function(r)
-  {-(2*r^26-30*r^25+281*r^24-2395*r^23+8258*r^22+31064*r^21-262677*r^20+225443*r^19+2052136*r^18-
-       5219030*r^17-1608928*r^16+18337836*r^15-18837080*r^14-2598688*r^13+22736336*r^12-32858736*r^11+
-       20384720*r^10+12930896*r^9-27988416*r^8+17416832*r^7-3862784*r^6-4575488*r^5+6638848*r^4-
-       3603200*r^3+640512*r^2-107520*r+63488)/(1920*(2*r^2+1)*(r+2)^3*(r+1)^3*(r^2+1)*r^10)}
-
-  PEcov.and9<-function(r)
-  {-(2*r^25-32*r^24+307*r^23-2612*r^22+11572*r^21+21934*r^20-328867*r^19+524994*r^18+2446870*r^17-
-       8676180*r^16-437020*r^15+36944680*r^14-40677696*r^13-44860384*r^12+106256352*r^11-15515040*r^10-
-       98636848*r^9+66358080*r^8+27142272*r^7-42614272*r^6+7781120*r^5+7327232*r^4-3388672*r^3+
-       430592*r^2-171008*r+63488)/(1920*(r+2)^3*(r-1)*(r+1)^3*(2*r^2-1)*r^10)}
-
-  PEcov.and10<-function(r)
-  {(30*r^13+90*r^12-127*r^11-621*r^10+320*r^9+1568*r^8-858*r^7-1370*r^6+909*r^5+295*r^4-292*r^3+44*r^2+
-      6*r-2)/(15*(2*r^2-1)*(r+1)^3*r^10)}
-  ###
+  CScov.and2<-function(t)
+  {2/15*(16128*t^11+268864*t^10+1943688*t^9+7979884*t^8+20460770*t^7+33935927*t^6+36470074*t^5+
+           24743401*t^4+9992165*t^3+2141319*t^2+184113*t+135)/(t+3)^3/(t+1)/(4*t+5)/(4*t^2+11*t+4)/(2*t+3)/
+      (t+2)/(2*t^2+6*t+3)/(2*t+5)^3/(2*t+1)*t^3}
+###
   asyvar<-0;
-  if (r < 2*sqrt(3)/3)
+  if (t < 1/2)
   {
-    asyvar<-PEcov.and0(r);
+    asyvar<-CScov.and0(t);
   } else {
-    if (r < 6/5)
+    if (t < 1)
     {
-      asyvar<- PEcov.and1(r);
+      asyvar<- CScov.and1(t);
     } else {
-      if (r < sqrt(5)-1)
-      {
-        asyvar<- PEcov.and2(r);
-      } else {
-        if (r < (6+2*sqrt(2))/7)
-        {
-          asyvar<- PEcov.and3(r);
-        } else {
-          if (r < 4/3)
-          {
-            asyvar<- PEcov.and4(r);
-          } else {
-            if (r < (6+sqrt(15))/7)
-            {
-              asyvar<- PEcov.and5(r);
-            } else {
-              if (r < 3/2)
-              {
-                asyvar<- PEcov.and6(r);
-              } else {
-                if (r < (1+sqrt(5))/2)
-                {
-                  asyvar<- PEcov.and7(r);
-                } else {
-                  if (r < 1+sqrt(2)/2)
-                  {
-                    asyvar<- PEcov.and8(r);
-                  } else {
-                    if (r < 2)
-                    {
-                      asyvar<- PEcov.and9(r);
-                    } else {
-                      asyvar<- PEcov.and10(r);
-                    }}}}}}}}}}
+      asyvar<- CScov.and2(t);
+    }}
   asyvar #need to multiply this by 4 in the asymptotic approximation
 } #end of the function
 #'
-#' @rdname funsMuVarUndPE2D
+#' @rdname funsMuVarUndCS2D
 #'
-#' @export asy.var.undPE2D
-asy.var.undPE2D <-function(r,ugraph=c("underlying", "reflexivity"))
+#' @export asy.var.undCS2D
+asy.var.undCS2D <-function(t,ugraph=c("underlying", "reflexivity"))
 {
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
     stop("ugraph must be one of \"underlying\" or \"reflexivity\"")
 
-  asyvar = ifelse(ugraph == "underlying",asyvarOrPE2D(r),asyvarAndPE2D(r))
+  asyvar = ifelse(ugraph == "underlying",asyvarOrCS2D(t),asyvarAndCS2D(t))
   asyvar #need to multiply this by 4 in the asymptotic approximation
 }
 
 #################################################################
 
 #' @title The indicator for the presence of an edge from a point to another
-#' for the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' for the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' one triangle case
 #'
 #' @description Returns \eqn{I(}\code{p1p2} is an edge
-#' in the underlying or reflexivity graph of PE-PCDs \eqn{)}
+#' in the underlying or reflexivity graph of CS-PCDs \eqn{)}
 #' for points \code{p1} and \code{p2} in a given triangle.
 #'
 #' More specifically, when the argument \code{ugraph="underlying"}, it returns
-#' the edge indicator for the PE-PCD underlying graph,
+#' the edge indicator for the CS-PCD underlying graph,
 #' that is, returns 1 if \code{p2} is
-#' in \eqn{N_{PE}(p1,r)} or \code{p1} is in \eqn{N_{PE}(p2,r)},
+#' in \eqn{N_{CS}(p1,t)} or \code{p1} is in \eqn{N_{CS}(p2,t)},
 #' returns 0 otherwise.
 #' On the other hand,
 #' when \code{ugraph="reflexivity"}, it returns
-#' the edge indicator for the PE-PCD reflexivity graph,
+#' the edge indicator for the CS-PCD reflexivity graph,
 #' that is, returns 1 if \code{p2} is
-#' in \eqn{N_{PE}(p1,r)} and \code{p1} is in \eqn{N_{PE}(p2,r)},
+#' in \eqn{N_{CS}(p1,t)} and \code{p1} is in \eqn{N_{CS}(p2,t)},
 #' returns 0 otherwise.
 #'
-#' In both cases PE proximity region is constructed
+#' In both cases CS proximity region is constructed
 #' with respect to the triangle \code{tri} and
-#' vertex regions are based on the center, \eqn{M=(m_1,m_2)}
+#' edge regions are based on the center, \eqn{M=(m_1,m_2)}
 #' in Cartesian coordinates or
 #' \eqn{M=(\alpha,\beta,\gamma)} in barycentric coordinates
-#' in the interior of \code{tri}
-#' or based on the circumcenter of \code{tri};
+#' in the interior of \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e.,
 #' the center of mass of \code{tri}.
 #'
@@ -999,31 +825,28 @@ asy.var.undPE2D <-function(r,ugraph=c("underlying", "reflexivity"))
 #'
 #' See also (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
-#' @param p1 A 2D point whose PE proximity region is constructed.
+#' @param p1 A 2D point whose CS proximity region is constructed.
 #' @param p2 A 2D point. The function determines
 #' whether there is an edge from \code{p1} to \code{p2} or not
-#' in the underlying or reflexivity graph of PE-PCDs.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' in the underlying or reflexivity graphs of CS-PCDs.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param tri A \eqn{3 \times 2} matrix with each row
 #' representing a vertex of the triangle.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
-#' which serves as a center in the interior of the triangle \code{tri}
-#' or the circumcenter of \code{tri}
-#' which may be entered as "CC" as well;
+#' which serves as a center in the interior of the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e., the center of mass of \code{tri}.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return Returns 1 if there is an edge between points \code{p1} and \code{p2}
-#' in the underlying or reflexivity graph of PE-PCDs
+#' in the underlying or reflexivity graph of CS-PCDs
 #' in a given triangle \code{tri}, and 0 otherwise.
 #'
-#' @seealso \code{\link{IedgePEbasic.tri}}, \code{\link{IedgeAStri}},
-#' \code{\link{IedgeCStri}} and \code{\link[pcds]{IarcPEtri}}
+#' @seealso \code{\link{IedgeCSbasic.tri}}, \code{\link{IedgeAStri}},
+#' \code{\link{IedgePEtri}} and \code{\link[pcds]{IarcCStri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -1036,30 +859,29 @@ asy.var.undPE2D <-function(r,ugraph=c("underlying", "reflexivity"))
 #' Tr<-rbind(A,B,C);
 #' M<-as.numeric(pcds::runif.tri(1,Tr)$g)  #try also M<-c(1.6,1.0);
 #'
-#' r<-1.5
+#' t<-1.5
 #' n<-3
 #' set.seed(1)
 #' Xp<-pcds::runif.tri(n,Tr)$g
 #'
-#' IedgePEtri(Xp[1,],Xp[2,],Tr,r,M)
-#' IedgePEtri(Xp[1,],Xp[2,],Tr,r,M,ugraph = "reflexivity")
+#' IedgeCStri(Xp[1,],Xp[2,],Tr,t,M)
+#' IedgeCStri(Xp[1,],Xp[2,],Tr,t,M,ugraph = "reflexivity")
 #'
 #' P1<-as.numeric(pcds::runif.tri(1,Tr)$g)
 #' P2<-as.numeric(pcds::runif.tri(1,Tr)$g)
-#' IedgePEtri(P1,P2,Tr,r,M)
-#' IedgePEtri(P1,P2,Tr,r,M,ugraph="r")
+#' IedgeCStri(P1,P2,Tr,t,M)
+#' IedgeCStri(P1,P2,Tr,t,M,ugraph="r")
 #' }
 #'
-#' @export IedgePEtri
-IedgePEtri <- function(p1,p2,tri,r,M=c(1,1,1),
-                       ugraph=c("underlying", "reflexivity"))
+#' @export IedgeCStri
+IedgeCStri <- function(p1,p2,tri,t,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 {
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
     stop("ugraph must be one of \"underlying\" or \"reflexivity\"")
 
-  arc12 = pcds::IarcPEtri(p1,p2,tri,r,M)
-  arc21 = pcds::IarcPEtri(p2,p1,tri,r,M)
+  arc12 = pcds::IarcCStri(p1,p2,tri,t,M)
+  arc21 = pcds::IarcCStri(p2,p1,tri,t,M)
 
   edge = ifelse(ugraph == "underlying",
                 max(arc12,arc21),
@@ -1070,15 +892,15 @@ IedgePEtri <- function(p1,p2,tri,r,M=c(1,1,1),
 
 #################################################################
 
-#' @title Number of edges in the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' @title Number of edges in the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' one triangle case
 #'
 #' @description
 #' An object of class \code{"NumEdges"}.
 #' Returns the number of edges of
-#' the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs)
+#' the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs)
 #' whose vertices are the
 #' given 2D numerical data set, \code{Xp}
 #' in a given triangle.
@@ -1086,57 +908,53 @@ IedgePEtri <- function(p1,p2,tri,r,M=c(1,1,1),
 #' (i.e., number of data points inside the triangle)
 #' and indices of the data points that reside in the triangle.
 #'
-#' PE proximity region \eqn{N_{PE}(x,r)} is defined
+#' CS proximity region \eqn{N_{CS}(x,t)} is defined
 #' with respect to the triangle, \code{tri}
-#' with expansion parameter \eqn{r \ge 1} and vertex regions are
+#' with expansion parameter \eqn{t > 0} and edge regions are
 #' based on the center \eqn{M=(m_1,m_2)} in Cartesian coordinates
 #' or \eqn{M=(\alpha,\beta,\gamma)} in barycentric coordinates
-#' in the interior of the triangle \code{tri} or
-#' based on circumcenter of \code{tri};
-#' default is \eqn{M=(1,1,1)},
-#' i.e., the center of mass of \code{tri}.
+#' in the interior of the triangle \code{tri};
+#' default is \eqn{M=(1,1,1)}, i.e.,
+#' the center of mass of \code{tri}.
 #' For the number of edges, loops are not allowed,
 #' so edges are only possible for points
 #' inside the triangle \code{tri} for this function.
 #'
-#' See also (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph}).
+#' See also
+#' (\insertCite{ceyhan:Phd-thesis,ceyhan:arc-density-CS;textual}{pcds.ugraph}).
 #'
 #' @param Xp A set of 2D points
-#' which constitute the vertices of PE-PCD.
+#' which constitute the vertices of CS-PCD.
 #' @param tri A \eqn{3 \times 2} matrix with each row
 #' representing a vertex of the triangle.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
-#' which serves as a center in the interior of the triangle \code{tri}
-#' or the circumcenter of \code{tri}
-#' which may be entered as "CC" as well;
+#' which serves as a center in the interior of the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e.,
 #' the center of mass of \code{tri}.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph,
-#' and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return A \code{list} with the elements
 #' \item{desc}{A short description of the output: number of edges
 #' and quantities related to the triangle}
-#' \item{und.graph}{Type of the graph as "Underlying"
-#' or "Reflexivity" for the PE-PCD}
+#' \item{und.graph}{Type of the graph as "Underlying" or "Reflexivity" for the CS-PCD}
 #' \item{num.edges}{Number of edges of the underlying
-#' or reflexivity graphs based on the PE-PCD
+#' or reflexivity graphs based on the CS-PCD
 #' with vertices in the given triangle \code{tri}}
 #' \item{num.in.tri}{Number of \code{Xp} points in the triangle, \code{tri}}
 #' \item{ind.in.tri}{The vector of indices of the \code{Xp} points
 #' that reside in the triangle}
-#' \item{tess.points}{Tessellation points, i.e., points on which the tessellation of the study region is performed,
+#' \item{tess.points}{Tessellation points,
+#' i.e., points on which the tessellation of the study region is performed,
 #' here, tessellation is the support triangle.}
 #' \item{vertices}{Vertices of the underlying or reflexivity graph, \code{Xp}.}
 #'
-#' @seealso \code{\link{num.edgesPE}}, \code{\link{num.edgesAStri}},
-#' \code{\link{num.edgesCStri}}, and \code{\link[pcds]{num.arcsPEtri}}
+#' @seealso \code{\link{num.edgesCS}}, \code{\link{num.edgesAStri}},
+#' \code{\link{num.edgesPEtri}}, and \code{\link[pcds]{num.arcsCStri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -1154,15 +972,16 @@ IedgePEtri <- function(p1,p2,tri,r,M=c(1,1,1),
 #'
 #' M<-as.numeric(pcds::runif.tri(1,Tr)$g)  #try also M<-c(1.6,1.0)
 #'
-#' Nedges = num.edgesPEtri(Xp,Tr,r=1.25,M)
-#' #try also Nedges = num.edgesPEtri(Xp,Tr,r=1.25,M,ugraph="reflexivity")
+#' Nedges = num.edgesCStri(Xp,Tr,t=1.5,M)
+#' #try also Nedges = num.edgesCStri(Xp,Tr,t=1.5,M,ugraph="reflexivity")
 #' Nedges
 #' summary(Nedges)
 #' plot(Nedges)
 #' }
 #'
-#' @export num.edgesPEtri
-num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export num.edgesCStri
+num.edgesCStri <- function(Xp,tri,t,M=c(1,1,1),
+                           ugraph=c("underlying", "reflexivity"))
 {
   if (!is.numeric(as.matrix(Xp)))
   {stop('Xp must be numeric')}
@@ -1184,23 +1003,18 @@ num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
   if (round(D0,14)==0)
   {stop('The triangle is degenerate')}
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
-  if (!(pcds::is.point(M) || pcds::is.point(M,3) || identical(M,"CC")))
+  if (!(pcds::is.point(M) || pcds::is.point(M,3) ))
   {stop('M must be a numeric 2D point for Cartesian coordinates or
-  3D point for barycentric coordinates or the circumcenter "CC" ')}
-
-  CC = pcds::circumcenter.tri(tri)
-  if (identical(M,"CC") )
-  { M<-CC }
+  3D point for barycentric coordinates ')}
 
   if (pcds::dimension(M)==3)
   {M<-pcds::bary2cart(M,tri)}
 
-  if (!(isTRUE(all.equal(M,CC)) ||
-        pcds::in.triangle(M,tri,boundary=FALSE)$in.tri))
-  {stop('M is not the circumcenter or not a center in the interior of the triangle')}
+  if (!(pcds::in.triangle(M,tri,boundary=FALSE)$in.tri))
+   {stop('M is not a center in the interior of the triangle')}
 
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
@@ -1220,13 +1034,13 @@ num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
       { ind.in.tri = c(ind.in.tri,i)
       for (k in (i:n)[-1]) #to avoid loops
       {
-        edges.in.tri<-edges.in.tri+IedgePEtri(Xp[i,],Xp[k,],tri,r,M,ugraph=ugraph)
+        edges.in.tri<-edges.in.tri+IedgeCStri(Xp[i,],Xp[k,],tri,t,M,ugraph=ugraph)
       }
       }
 
       for (j in (i:n)[-1]) #to avoid loops
       {
-        tot.edges<-tot.edges+IedgePEtri(Xp[i,],Xp[j,],tri,r,M,ugraph=ugraph)
+        tot.edges<-tot.edges+IedgeCStri(Xp[i,],Xp[j,],tri,t,M,ugraph=ugraph)
       }
     }
   }
@@ -1237,12 +1051,11 @@ num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
                      "Underlying",
                      "Reflexivity")
   desc<-paste("Number of Edges of the ",und.graph,
-              " Graphs of the PE-PCD and the Related Quantities with vertices Xp in One Triangle",sep="")
+              " Graphs of the CS-PCD and the Related Quantities with vertices Xp in One Triangle",sep="")
 
   res<-list(desc=desc, #description of the output
             und.graph = und.graph, #"Underlying" or "Reflexivity"
-            num.edges=tot.edges,
-            #total number of edges in the entire underlying or reflexivity graph
+            num.edges=tot.edges, #total number of edges in the entire underlying or reflexivity graph
             tri.num.edges=edges.in.tri, #vector of number of edges for the triangle
             num.in.tri=NinTri, # number of Xp points in CH of Yp points
             ind.in.tri=ind.in.tri, #indices of data points inside the triangle
@@ -1259,36 +1072,33 @@ num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 
 #################################################################
 
-#' @title Edge density of the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' @title Edge density of the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' one triangle case
 #'
 #' @description Returns the edge density
-#' of the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs)
+#' of the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs)
 #' whose vertex set is the given 2D numerical data set, \code{Xp},
 #' (some of its members are) in the triangle \code{tri}.
 #'
-#' PE proximity regions is defined with respect to \code{tri} with
-#' expansion parameter \eqn{r \ge 1} and vertex regions are
+#' CS proximity regions is defined with respect to \code{tri} with
+#' expansion parameter \eqn{t > 0} and edge regions are
 #' based on center \eqn{M=(m_1,m_2)} in Cartesian coordinates or
 #' \eqn{M=(\alpha,\beta,\gamma)} in barycentric coordinates
-#' in the interior of the triangle \code{tri} or based on
-#' circumcenter of \code{tri}; default is \eqn{M=(1,1,1)}, i.e.,
+#' in the interior of the triangle \code{tri}; default is \eqn{M=(1,1,1)}, i.e.,
 #' the center of mass of \code{tri}.
 #' The function also provides edge density standardized
 #' by the mean and asymptotic variance of the edge density
-#' of the underlying or reflexivity graph of PE-PCD
+#' of the underlying or reflexivity graphs of CS-PCD
 #' for uniform data in the triangle \code{tri}
 #' only when \code{M} is the center of mass.
 #' For the number of edges, loops are not allowed.
 #'
-#' \code{in.tri.only} is a logical argument (default is \code{FALSE})
-#' for considering only the points
+#' \code{in.tri.only} is a logical argument (default is \code{FALSE}) for considering only the points
 #' inside the triangle or all the points as the vertices of the digraph.
 #' if \code{in.tri.only=TRUE}, edge density is computed only for
-#' the points inside the triangle (i.e., edge density of the subgraph of
-#' the underlying or reflexivity graph
+#' the points inside the triangle (i.e., edge density of the subgraph of the underlying or reflexivity graph
 #' induced by the vertices in the triangle is computed),
 #' otherwise edge density of the entire graph
 #' (i.e., graph with all the vertices) is computed.
@@ -1296,19 +1106,16 @@ num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 #' See also (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
 #' @param Xp A set of 2D points
-#' which constitute the vertices of the underlying or reflexivity graph of the PE-PCD.
+#' which constitute the vertices of the underlying or reflexivity graphs of the CS-PCD.
 #' @param tri A \eqn{3 \times 2} matrix with each row
 #' representing a vertex of the triangle.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
-#' which serves as a center in the interior of the triangle \code{tri}
-#' or the circumcenter of \code{tri}
-#' which may be entered as "CC" as well;
+#' which serves as a center in the interior of the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e., the center of mass of \code{tri}.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #' @param in.tri.only A logical argument (default is \code{in.tri.only=FALSE})
@@ -1320,18 +1127,18 @@ num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 #'
 #' @return A \code{list} with the elements
 #' \item{edge.dens}{Edge density of the underlying
-#' or reflexivity graphs of the PE-PCD
+#' or reflexivity graphs based on the CS-PCD
 #' whose vertices are the 2D numerical data set, \code{Xp};
-#' PE proximity regions are defined
-#' with respect to the triangle \code{tri} and \code{M}-vertex regions}
+#' CS proximity regions are defined
+#' with respect to the triangle \code{tri} and \code{M}-edge regions}
 #' \item{std.edge.dens}{Edge density standardized
 #' by the mean and asymptotic variance of the edge
-#' density of the underlying or reflexivity graph
-#' of the PE-PCD for uniform data in the triangle \code{tri}.
+#' density of the underlying or reflexivity graphs
+#' based on the CS-PCD for uniform data in the triangle \code{tri}.
 #' This will only be returned, if \code{M} is the center of mass.}
 #'
-#' @seealso \code{\link{ASedge.dens.tri}}, \code{\link{CSedge.dens.tri}},
-#' and \code{\link[pcds]{PEarc.dens.tri}}
+#' @seealso \code{\link{ASedge.dens.tri}}, \code{\link{PEedge.dens.tri}},
+#' and \code{\link[pcds]{CSarc.dens.tri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -1350,23 +1157,24 @@ num.edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivi
 #' M<-as.numeric(pcds::runif.tri(1,Tr)$g)  #try also M<-c(1.6,1.0)
 #'
 #' #For the underlying graph
-#' num.edgesPEtri(Xp,Tr,r=1.5,M)$num.edges
-#' PEedge.dens.tri(Xp,Tr,r=1.5,M)
-#' PEedge.dens.tri(Xp,Tr,r=1.5,M,in.tri.only = TRUE)
+#' num.edgesCStri(Xp,Tr,t=1.5,M)$num.edges
+#' CSedge.dens.tri(Xp,Tr,t=1.5,M)
+#' CSedge.dens.tri(Xp,Tr,t=1.5,M,in.tri.only = TRUE)
 #'
 #' #For the reflexivity graph
-#' num.edgesPEtri(Xp,Tr,r=1.5,M,ugraph="r")$num.edges
-#' PEedge.dens.tri(Xp,Tr,r=1.5,M,ugraph="r")
-#' PEedge.dens.tri(Xp,Tr,r=1.5,M,in.tri.only = TRUE,ugraph="r")
+#' num.edgesCStri(Xp,Tr,t=1.5,M,ugraph="r")$num.edges
+#' CSedge.dens.tri(Xp,Tr,t=1.5,M,ugraph="r")
+#' CSedge.dens.tri(Xp,Tr,t=1.5,M,in.tri.only = TRUE,ugraph="r")
 #' }
 #'
-#' @export PEedge.dens.tri
-PEedge.dens.tri <- function(Xp,tri,r,M=c(1,1,1),
+#' @export CSedge.dens.tri
+CSedge.dens.tri <- function(Xp,tri,t,M=c(1,1,1),
                             ugraph=c("underlying", "reflexivity"),in.tri.only=FALSE)
 {
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
     stop("ugraph must be one of \"underlying\" or \"reflexivity\"")
+
 
   if (pcds::is.point(Xp))
   { Xp<-matrix(Xp,ncol=2)
@@ -1382,14 +1190,14 @@ PEedge.dens.tri <- function(Xp,tri,r,M=c(1,1,1),
   {stop('The graph is void or has only one vertex!
     So, there are not enough Xp points to compute the edge density!')}
 
-  nedges<-num.edgesPEtri(Xp,tri,r,M,ugraph)$num.edges
+  nedges<-num.edgesCStri(Xp,tri,t,M,ugraph)$num.edges
 
-  mean.rho<-mu.undPE2D(r,ugraph)
-  var.rho<-4*asy.var.undPE2D(r,ugraph)
+  mean.rho<-mu.undCS2D(t,ugraph)
+  var.rho<-4*asy.var.undCS2D(t,ugraph)
 
   if (in.tri.only==TRUE)
   {
-    ind.it<-c() #index of in triangle points
+    ind.it<-c()
     for (i in 1:nx)
     {
       ind.it<-c(ind.it,pcds::in.triangle(Xp[i,],tri)$in.tri)
@@ -1421,32 +1229,31 @@ PEedge.dens.tri <- function(Xp,tri,r,M=c(1,1,1),
 
 #################################################################
 
-#' @title Number of edges of the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' @title Number of edges of the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' multiple triangle case
 #'
 #' @description
 #' An object of class \code{"NumEdges"}.
 #' Returns the number of edges of
 #' the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraph (PE-PCD)
+#' Central Similarity Proximity Catch Digraph (CS-PCD)
 #' and various other quantities and vectors such as
 #' the vector of number of vertices (i.e., number of data points)
 #' in the Delaunay triangles,
 #' number of data points in the convex hull of \code{Yp} points,
 #' indices of the Delaunay triangles for the data points, etc.
 #'
-#' PE proximity regions are defined with respect to the
+#' CS proximity regions are defined with respect to the
 #' Delaunay triangles based on \code{Yp} points
-#' with expansion parameter \eqn{r \ge 1}
-#' and vertex regions in each triangle
+#' with expansion parameter \eqn{t > 0}
+#' and edge regions in each triangle
 #' is based on the center \eqn{M=(\alpha,\beta,\gamma)}
 #' in barycentric coordinates in the interior of each
-#' Delaunay triangle or based on circumcenter of each Delaunay triangle
-#' (default for \eqn{M=(1,1,1)}
+#' Delaunay triangle (default for \eqn{M=(1,1,1)}
 #' which is the center of mass of the triangle).
 #' Each Delaunay triangle is first converted to
-#' a (nonscaled) basic triangle so that \code{M} will be the same
+#' an (nonscaled) basic triangle so that \code{M} will be the same
 #' type of center for each Delaunay triangle
 #' (this conversion is not necessary when \code{M} is \eqn{CM}).
 #'
@@ -1460,37 +1267,32 @@ PEedge.dens.tri <- function(Xp,tri,r,M=c(1,1,1),
 #' for points inside the convex hull of \code{Yp} points.
 #'
 #' See (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph})
-#' for more on PE-PCDs.
+#' for more on CS-PCDs.
 #' Also, see (\insertCite{okabe:2000,ceyhan:comp-geo-2010,sinclair:2016;textual}{pcds.ugraph})
 #' for more on Delaunay triangulation and the corresponding algorithm.
 #'
 #' @param Xp A set of 2D points
-#' which constitute the vertices of the underlying or reflexivity graph of the PE-PCD.
+#' which constitute the vertices of the underlying or reflexivity graphs of the CS-PCD.
 #' @param Yp A set of 2D points
 #' which constitute the vertices of the Delaunay triangles.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 3D point in barycentric coordinates
-#' which serves as a center in the interior of each Delaunay
-#' triangle or circumcenter of each Delaunay triangle
-#' (for this, argument should be set as \code{M="CC"}),
+#' which serves as a center in the interior of each Delaunay triangle,
 #' default for \eqn{M=(1,1,1)}
 #' which is the center of mass of each triangle.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph,
-#' and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return A \code{list} with the elements
 #' \item{desc}{A short description of the output: number of edges
 #' and related quantities for the induced subgraphs of the underlying
-#' or reflexivity graphs (of PE-PCD) in the Delaunay triangles}
-#' \item{und.graph}{Type of the graph as "Underlying"
-#' or "Reflexivity" for the PE-PCD}
+#' or reflexivity graphs (of CS-PCD) in the Delaunay triangles}
+#' \item{und.graph}{Type of the graph as "Underlying" or "Reflexivity" for the CS-PCD}
 #' \item{num.edges}{Total number of edges in all triangles,
 #' i.e., the number of edges for the entire underlying
-#' or reflexivity graphs of the PE-PCD}
+#' or reflexivity graphs of the CS-PCD}
 #' \item{num.in.conv.hull}{Number of \code{Xp} points
 #' in the convex hull of \code{Yp} points}
 #' \item{num.in.tris}{The vector of number of \code{Xp} points
@@ -1498,7 +1300,7 @@ PEedge.dens.tri <- function(Xp,tri,r,M=c(1,1,1),
 #' \item{weight.vec}{The \code{vector} of the areas of
 #' Delaunay triangles based on \code{Yp} points}
 #' \item{tri.num.edges}{The \code{vector} of the number of edges
-#' of the components of the PE-PCD in the
+#' of the components of the CS-PCD in the
 #' Delaunay triangles based on \code{Yp} points}
 #' \item{del.tri.ind}{A matrix of indices of vertices of
 #' the Delaunay triangles based on \code{Yp} points,
@@ -1507,12 +1309,13 @@ PEedge.dens.tri <- function(Xp,tri,r,M=c(1,1,1),
 #' \item{data.tri.ind}{A \code{vector} of indices of vertices of
 #' the Delaunay triangles in which data points reside,
 #' i.e., column number of \code{del.tri.ind} for each \code{Xp} point.}
-#' \item{tess.points}{Points on which the tessellation of the study region is performed,
+#' \item{tess.points}{Tessellation points,
+#' i.e., points on which the tessellation of the study region is performed,
 #' here, tessellation is the Delaunay triangulation based on \code{Yp} points.}
 #' \item{vertices}{Vertices of the underlying or reflexivity graph, \code{Xp}.}
 #'
-#' @seealso \code{\link{num.edgesPEtri}}, \code{\link{num.edgesAS}},
-#' \code{\link{num.edgesCS}}, and \code{\link[pcds]{num.arcsPE}}
+#' @seealso \code{\link{num.edgesCStri}}, \code{\link{num.edgesAS}},
+#' \code{\link{num.edgesPE}}, and \code{\link[pcds]{num.arcsCS}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -1534,14 +1337,15 @@ PEedge.dens.tri <- function(Xp,tri,r,M=c(1,1,1),
 #'
 #' M<-c(1,1,1)  #try also M<-c(1,2,3)
 #'
-#' Nedges = num.edgesPE(Xp,Yp,r=1.5,M) #try also Nedges = num.edgesPE(Xp,Yp,r=1.5,M,ugraph="r")
+#' Nedges = num.edgesCS(Xp,Yp,t=1.5,M)
+#' #try also Nedges = num.edgesCS(Xp,Yp,t=1.5,M,ugraph="r")
 #' Nedges
 #' summary(Nedges)
 #' plot(Nedges)
 #' }
 #'
-#' @export num.edgesPE
-num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export num.edgesCS
+num.edgesCS <- function(Xp,Yp,t,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 {
   if (!is.numeric(as.matrix(Xp)) || !is.numeric(as.matrix(Yp)))
   {stop('Xp and Yp must be numeric')}
@@ -1558,12 +1362,11 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
   if (ncol(Yp)!=2 || nrow(Yp)<3)
   {stop('Yp must be of dimension kx2 with k>=3')}
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
-  if ((!pcds::is.point(M,3) && M!="CC") || !all(M>0))
-  {stop('M must be a numeric 3D point with positive barycentric coordinates or
-        "CC" for circumcenter')}
+  if (!pcds::is.point(M,3) || !all(M>0))
+  {stop('M must be a numeric 3D point with positive barycentric coordinates')}
 
   nx<-nrow(Xp); ny<-nrow(Yp)
 
@@ -1596,34 +1399,34 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 
   if (ny==3)
   { #tri<-pcds::as.basic.tri(Yp)$tri
-  #NumEdges = num.edgesPEtri(Xp,tri,r,M,ugraph)
+  #NumEdges = num.edgesCStri(Xp,tri,t,M,ugraph)
     NinTri<-NinCH #NumEdges$num.in.tri #number of points in the triangle
 
-    if (NinTri==0)
-    {Tot.Edges<-0;
-    ni.vec<-edges<-rep(0,ndt)
-    data.tri.ind = ind.in.CH =  NA
-    } else
-    {
-      Xdt<-matrix(Xp[inCH,],ncol=2)
-      tri<-pcds::as.basic.tri(Yp)$tri
-      #convert the triangle Yp into an nonscaled basic triangle, see as.basic.tri help page
-      NumEdges = num.edgesPEtri(Xdt,tri,r,M,ugraph) #for the vertices inside the triangle
-      #Wvec<-pcds::area.polygon(tri)
-      Tot.Edges<- NumEdges$num.edges
-      #number of edges in the triangle Yp
-      ni.vec = NumEdges$num.in.tri
-      Tri.Ind = NumEdges$ind.in.tri #returns 1's if the points Xp[i,]'s are inside triangle based on Yp, NA otherwise
-      data.tri.ind = rep(NA,nx)
-      data.tri.ind[Tri.Ind] = 1
-      edges = NumEdges$num.edges
-      ind.in.CH = which(inCH) #which(!is.na(Tri.Ind))
-    }
+  if (NinTri==0)
+  {Tot.Edges<-0;
+  ni.vec<-edges<-rep(0,ndt)
+  data.tri.ind = ind.in.CH =  NA
+  } else
+  {
+    Xdt<-matrix(Xp[inCH,],ncol=2)
+    tri<-pcds::as.basic.tri(Yp)$tri
+    #convert the triangle Yp into an nonscaled basic triangle, see as.basic.tri help page
+    NumEdges = num.edgesCStri(Xdt,tri,t,M,ugraph) #for the vertices inside the triangle
+  #  Wvec<-pcds::area.polygon(tri)
+    Tot.Edges<- NumEdges$num.edges
+    #number of edges in the triangle Yp
+    ni.vec = NumEdges$num.in.tri
+    Tri.Ind = NumEdges$ind.in.tri #returns 1's if the points Xp[i,]'s are inside triangle based on Yp, NA otherwise
+    data.tri.ind = rep(NA,nx)
+    data.tri.ind[Tri.Ind] = 1
+    edges = NumEdges$num.edges
+    ind.in.CH = which(inCH) #which(!is.na(Tri.Ind))
+  }
 
     Tot.Edges = Tot.Edges + sum(duplicated(Xp[!inCH,]))
 
   desc<-paste("Number of Edges of the ",und.graph,
-              " Graphs of the PE-PCD with vertices Xp and the Related Quantities for the Induced Subdigraph for the Points in the Delaunay Triangle",sep="")
+              " Graphs of the CS-PCD with vertices Xp and the Related Quantities for the Induced Subdigraph for the Points in the Delaunay Triangle",sep="")
 
   res<-list(desc=desc, #description of the output
             und.graph = und.graph, #"Underlying" or "Reflexivity"
@@ -1653,32 +1456,30 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 
       #calculation of the total number of edges
       ni.vec<-edges<-vector()
+      # data.del.tris = del.tris=list()
       data.tri.ind = rep(NA,nx)
+
       for (i in 1:ndt)
       {
-        dt.ind = which(Tri.Ind==i)
+        dt.ind=which(Tri.Ind==i)
         #which indices of data points residing in ith Delaunay triangle
         Xpi<-Xp[dt.ind,] #points in ith Delaunay triangle
         data.tri.ind[dt.ind] = i
         #assigning the index of the Delaunay triangle that contains the data point
-        #  data.del.tris=c(data.del.tris,list(Xpi))
         ifelse(ndt==1,
                Tri<-Yp[Ytri,],
                Tri<-Yp[Ytri[i,],])
         #vertices of ith triangle
         tri<-pcds::as.basic.tri(Tri)$tri
         #convert the triangle Tri into an nonscaled basic triangle, see as.basic.tri help page
-        #  del.tris=rbind(del.tris,tri)
         ni.vec<-c(ni.vec,length(Xpi)/2)
         #number of points in ith Delaunay triangle
 
-        ifelse(identical(M,"CC"),
-               cent<-pcds::circumcenter.tri(tri),
-               cent<-M)
-        num.edges<-num.edgesPEtri(Xpi,tri,r,cent,ugraph)$num.edges
+        num.edges<-num.edgesCStri(Xpi,tri,t,M,ugraph)$num.edges
         #number of edges in ith triangle
         edges<-c(edges,num.edges)
         #number of edges in all triangles as A \code{vector}
+
       }
 
       Tot.Edges<-sum(edges)  #the total number of edges in all triangles
@@ -1687,11 +1488,11 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
     Tot.Edges = Tot.Edges + sum(duplicated(Xp[!inCH,]))
 
     desc<-paste("Number of Edges of the ",und.graph,
-                " Graphs of the PE-PCD with vertices Xp and the Related Quantities for the Induced Subdigraphs for the Points in the Delaunay Triangles",sep="")
+                " Graphs of the CS-PCD with vertices Xp and the Related Quantities for the Induced Subdigraphs for the Points in the Delaunay Triangles",sep="")
 
     res<-list(desc=desc, #description of the output
               und.graph = und.graph, #"Underlying" or "Reflexivity"
-              num.edges=Tot.Edges, #number of edges for the entire PCD
+              num.edges=Tot.Edges, #number of edges for the entire CS-PCD
               tri.num.edges=edges,
               #vector of number of edges for the Delaunay triangles
               num.in.conv.hull=NinCH,
@@ -1701,15 +1502,13 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
               # vector of number of Xp points in the Delaunay triangles
               weight.vec=Wvec, #areas of Delaunay triangles
               del.tri.ind=t(Ytri),
-              # indices of the Delaunay triangles, each column corresponds to the vector of indices
-              #of the vertices of one triangle
-              data.tri.ind=data.tri.ind,
-              #indices of the Delaunay triangles in which data points reside,
-              #i.e., column number of del.tri.ind for each Xp point
+              # indices of the Delaunay triangles, each column corresponds to the vector of indices of the vertices of one triangle
+              data.tri.ind=data.tri.ind, #indices of the Delaunay triangles in which data points reside, i.e., column number of del.tri.ind for each Xp point
               tess.points=Yp, #tessellation points
               vertices=Xp #vertices of the digraph
     )
-    }
+
+  }
   class(res) <- "NumEdges"
   res$call <-match.call()
 
@@ -1717,11 +1516,12 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 } #end of the function
 #'
 
-################################################################# bura
+
+#################################################################
 
 #' @title A test of segregation/association based on edge density
-#' of underlying or reflexivity graph of Proportional Edge Proximity Catch Digraph
-#' (PE-PCD) for 2D data
+#' of underlying or reflexivity graph of Central Similarity Proximity Catch Digraph
+#' (CS-PCD) for 2D data
 #'
 #' @description
 #' An object of class \code{"htest"} (i.e., hypothesis test) function
@@ -1733,18 +1533,18 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' (where \code{Xp} points cluster around
 #' \code{Yp} points) based on the normal approximation
 #' of the edge density of the underlying or reflexivity graph of
-#' PE-PCD for uniform 2D data.
+#' CS-PCD for uniform 2D data.
 #'
 #' The function yields the test statistic,
 #' \eqn{p}-value for the corresponding \code{alternative},
-#' the confidence interval,
-#' estimate and null value for the parameter of interest
+#' the confidence interval, estimate
+#' and null value for the parameter of interest
 #' (which is the edge density),
 #' and method and name of the data set used.
 #'
 #' Under the null hypothesis of uniformity of \code{Xp} points
 #' in the convex hull of \code{Yp} points, edge density
-#' of underlying or reflexivity graph of PE-PCD
+#' of underlying or reflexivity graph of CS-PCD
 #' whose vertices are \code{Xp} points equals
 #' to its expected value under the uniform distribution and
 #' \code{alternative} could be two-sided, or left-sided
@@ -1753,8 +1553,8 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' around the centers of the triangles,
 #' or segregation).
 #'
-#' PE proximity region is constructed
-#' with the expansion parameter \eqn{r \ge 1} and \eqn{CM}-vertex regions
+#' CS proximity region is constructed
+#' with the expansion parameter \eqn{t > 0} and \eqn{CM}-edge regions
 #' (i.e., the test is not available for a general center \eqn{M}
 #' at this version of the function).
 #'
@@ -1779,8 +1579,8 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' edge density is taken to be 1,
 #' as this is clearly a case of segregation.
 #' Removing the conditioning and extending it to
-#' the case of non-concurring supports are
-#' topics of ongoing research of the author of the package.
+#' the case of non-concurring supports is
+#' an ongoing topic of research of the author of the package.
 #'
 #' \code{ch.cor} is for convex hull correction
 #' (default is \code{"no convex hull correction"}, i.e., \code{ch.cor=FALSE})
@@ -1789,17 +1589,16 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #'
 #' See also (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph})
 #' for more on the test based on the edge density of
-#' underlying or reflexivity graph of PE-PCDs.
+#' underlying or reflexivity graphs of CS-PCDs.
 #'
 #' @param Xp A set of 2D points
 #' which constitute the vertices of the underlying
-#' or reflexivity graphs of the PE-PCD.
+#' or reflexivity graphs of the CS-PCD.
 #' @param Yp A set of 2D points
 #' which constitute the vertices of the Delaunay triangles.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #' @param ch.cor A logical argument for convex hull correction,
@@ -1810,7 +1609,7 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' one of \code{"two.sided"}, \code{"less"}, \code{"greater"}.
 #' @param conf.level Level of the confidence interval,
 #' default is \code{0.95}, for the edge density of
-#' underlying or reflexivity graph of PE-PCD based on
+#' underlying or reflexivity graphs of CS-PCD based on
 #' the 2D data set \code{Xp}.
 #'
 #' @return A \code{list} with the elements
@@ -1829,7 +1628,7 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' \item{method}{Description of the hypothesis test}
 #' \item{data.name}{Name of the data set}
 #'
-#' @seealso \code{\link{CSedge.dens.test}} and \code{\link[pcds]{PEarc.dens.test}}
+#' @seealso \code{\link{PEedge.dens.test}} and \code{\link[pcds]{CSarc.dens.test}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -1849,16 +1648,17 @@ num.edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #'
 #' pcds::plotDelaunay.tri(Xp,Yp,xlab="",ylab="")
 #'
-#' PEedge.dens.test(Xp,Yp,r=1.25)
-#' PEedge.dens.test(Xp,Yp,r=1.25,ch=TRUE)
+#' CSedge.dens.test(Xp,Yp,t=1.5)
+#' CSedge.dens.test(Xp,Yp,t=1.5,ch=TRUE)
 #'
-#' PEedge.dens.test(Xp,Yp,r=1.25,ugraph="r")
-#' PEedge.dens.test(Xp,Yp,r=1.25,ugraph="r",ch=TRUE)
+#' CSedge.dens.test(Xp,Yp,t=1.5,ugraph="r")
+#' CSedge.dens.test(Xp,Yp,t=1.5,ugraph="r",ch=TRUE)
 #' #since Y points are not uniform, convex hull correction is invalid here
+#'
 #' }
 #'
-#' @export PEedge.dens.test
-PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.cor=FALSE,
+#' @export CSedge.dens.test
+CSedge.dens.test <- function(Xp,Yp,t,ugraph=c("underlying", "reflexivity"),ch.cor=FALSE,
                             alternative = c("two.sided", "less", "greater"),
                             conf.level = 0.95)
 {
@@ -1888,8 +1688,8 @@ PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.co
   if (ncol(Yp)!=2 || nrow(Yp)<3)
   {stop('Yp must be of dimension kx2 with k>=3')}
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
   if (!missing(conf.level))
     if (length(conf.level) != 1 || is.na(conf.level) ||
@@ -1900,11 +1700,11 @@ PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.co
   if (length(ugraph) > 1 || is.na(ugraph))
     stop("ugraph must be one of \"underlying\" or \"reflexivity\"")
 
-  Edges<-num.edgesPE(Xp,Yp,r,M=c(1,1,1),ugraph)
+  Edges<-num.edgesCS(Xp,Yp,t,M=c(1,1,1),ugraph)
   #use the default, i.e., CM for the center M
   NinCH<-Edges$num.in.con
 
-  num.edges<-Edges$num.edges #total number of edges in the PE-PCD
+  num.edges<-Edges$num.edges #total number of edges in the CS-PCD
   num.edges.tris = Edges$tri.num.edges
   #vector of number of edges in the Delaunay triangles
   num.dat.tris = Edges$num.in.tris
@@ -1922,14 +1722,14 @@ PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.co
     {
       Xpi = Xp[which(tri.ind==i),]
       tri =  Yp[ind.triCH[i,],]
-      npe = pcds::NPEtri(Xpi,tri,r)
+      npe = pcds::NCStri(Xpi,tri,t)
       num.edges = num.edges+pcds::area.polygon(npe)/Wvec[i]
     }
   }
-  asy.mean0<-mu.undPE2D(r,ugraph)  #asy mean value for the r value
+  asy.mean0<-mu.undCS2D(t,ugraph)  #asy mean value for the r value
   asy.mean<-asy.mean0*sum(LW^2)
 
-  asy.var0<-4*asy.var.undPE2D(r,ugraph)  #asy variance value for the r value
+  asy.var0<-4*asy.var.undCS2D(t,ugraph)  #asy variance value for the r value
   asy.var<-asy.var0*sum(LW^3)+4*asy.mean0^2*(sum(LW^3)-(sum(LW^2))^2)
 
   if (NinCH == 0) {
@@ -1944,7 +1744,7 @@ PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.co
   }
   estimate1<-edge.dens; estimate2<-asy.mean
 
-  method <- c("Large Sample z-Test Based on Edge Density of", ifelse(ugraph ==  "underlying", "underlying","reflexivity"), "graph of PE-PCD for Testing Uniformity of 2D Data ---")
+  method <- c("Large Sample z-Test Based on Edge Density of", ifelse(ugraph ==  "underlying", "underlying","reflexivity"), "graph of CS-PCD for Testing Uniformity of 2D Data ---")
 
   if (ch.cor==FALSE)
   {
@@ -2004,18 +1804,18 @@ PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.co
 
 #################################################################
 
-#' @title Incidence matrix for the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' @title Incidence matrix for the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' one triangle case
 #'
 #' @description Returns the incidence matrix
-#' for the underlying or reflexivity graph of the PE-PCD
+#' for the underlying or reflexivity graphs of the CS-PCD
 #' whose vertices are the given 2D numerical data set, \code{Xp},
 #' in the triangle \code{tri}\eqn{=T(v=1,v=2,v=3)}.
 #'
-#' PE proximity regions are constructed with respect to triangle \code{tri}
-#' with expansion parameter \eqn{r \ge 1}
-#' and vertex regions are based on the center \eqn{M=(m_1,m_2)}
+#' CS proximity regions are constructed with respect to triangle \code{tri}
+#' with expansion parameter \eqn{t > 0}
+#' and edge regions are based on the center \eqn{M=(m_1,m_2)}
 #' in Cartesian coordinates
 #' or \eqn{M=(\alpha,\beta,\gamma)} in barycentric coordinates
 #' in the interior of the triangle \code{tri};
@@ -2026,29 +1826,27 @@ PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.co
 #'
 #' @param Xp A set of 2D points
 #' which constitute the vertices of the underlying
-#' or reflexivity graph of the PE-PCD.
+#' or reflexivity graph of the CS-PCD.
 #' @param tri A \eqn{3 \times 2} matrix with each row
 #' representing a vertex of the triangle.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
-#' which serves as a center in the interior of the triangle \code{tri}
-#' or the circumcenter of \code{tri}
-#' which may be entered as "CC" as well;
+#' which serves as a center in the interior of the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e., the center of mass of \code{tri}.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph,
+#' and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
-#' @return Incidence matrix for the underlying or reflexivity graph
-#' of the PE-PCD with vertices
+#' @return Incidence matrix for the underlying or reflexivity graphs
+#' of the CS-PCD with vertices
 #' being 2D data set, \code{Xp}
-#' in the triangle \code{tri} with vertex regions based on center \code{M}
+#' in the triangle \code{tri} with edge regions based on center \code{M}
 #'
-#' @seealso \code{\link{inci.mat.undPE}}, \code{\link{inci.mat.undAStri}},
-#' \code{\link{inci.mat.undCStri}}, and \code{\link[pcds]{inci.matPEtri}}
+#' @seealso \code{\link{inci.mat.undCS}}, \code{\link{inci.mat.undAStri}},
+#' \code{\link{inci.mat.undPEtri}}, and \code{\link[pcds]{inci.matCStri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -2065,17 +1863,18 @@ PEedge.dens.test <- function(Xp,Yp,r,ugraph=c("underlying", "reflexivity"),ch.co
 #' Xp<-pcds::runif.tri(n,Tr)$g
 #'
 #' M<-as.numeric(pcds::runif.tri(1,Tr)$g)  #try also M<-c(1.6,1.0)
-#' (IM<-inci.mat.undPEtri(Xp,Tr,r=1.25,M))
+#' (IM<-inci.mat.undCStri(Xp,Tr,t=1.5,M))
 #' pcds::dom.num.greedy(IM) #try also pcds::dom.num.exact(IM)
 #' pcds::Idom.num.up.bnd(IM,3)
 #'
-#' (IM<-inci.mat.undPEtri(Xp,Tr,r=1.25,M,ugraph="r"))
+#' (IM<-inci.mat.undCStri(Xp,Tr,t=1.5,M,ugraph="r"))
 #' pcds::dom.num.greedy(IM) #try also pcds::dom.num.exact(IM)
 #' pcds::Idom.num.up.bnd(IM,3)
 #' }
 #'
-#' @export inci.mat.undPEtri
-inci.mat.undPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export inci.mat.undCStri
+inci.mat.undCStri <- function(Xp,tri,t,M=c(1,1,1),
+                              ugraph=c("underlying", "reflexivity"))
 {
   if (!is.numeric(as.matrix(Xp)))
   {stop('Xp must be numeric')}
@@ -2097,23 +1896,18 @@ inci.mat.undPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflex
   if (round(D0,14)==0)
   {stop('The triangle is degenerate')}
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
-  if (!(pcds::is.point(M) || pcds::is.point(M,3) || identical(M,"CC")))
+  if (!(pcds::is.point(M) || pcds::is.point(M,3) ))
   {stop('M must be a numeric 2D point for Cartesian coordinates or
-  3D point for barycentric coordinates or the circumcenter "CC" ')}
-
-  CC = pcds::circumcenter.tri(tri)
-  if (identical(M,"CC") )
-  { M<-CC }
+  3D point for barycentric coordinates ')}
 
   if (pcds::dimension(M)==3)
   {M<-pcds::bary2cart(M,tri)}
 
-  if (!(isTRUE(all.equal(M,CC)) ||
-        pcds::in.triangle(M,tri,boundary=FALSE)$in.tri))
-  {stop('M is not the circumcenter or not a center in the interior of the triangle')}
+  if (!(pcds::in.triangle(M,tri,boundary=FALSE)$in.tri))
+   {stop('M is not a center in the interior of the triangle')}
 
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
@@ -2121,84 +1915,68 @@ inci.mat.undPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflex
 
   n<-nrow(Xp)
   inc.mat<-matrix(0, nrow=n, ncol=n)
- # if (n>=1)
+ # if (n>1)
  # {
     for (i in 1:n)
     {p1<-Xp[i,]
 
     for (j in (i:n) )
     {p2<-Xp[j,]
-    inc.mat[i,j]<-inc.mat[j,i]<-IedgePEtri(p1,p2,tri,r,M,ugraph)
+    inc.mat[i,j]<-inc.mat[j,i]<-IedgeCStri(p1,p2,tri,t,M,ugraph)
     }
     }
- # }
+  #}
   inc.mat
 } #end of the function
 #'
 
 #################################################################
 
-#' @title The edges of the underlying or reflexivity graph of
-#' the Proportional Edge Proximity Catch Digraph
-#' (PE-PCD) for 2D data - one triangle case
+#' @title The edges of the underlying or reflexivity graphs of
+#' the Central Similarity Proximity Catch Digraph
+#' (CS-PCD) for 2D data - one triangle case
 #'
 #' @description
 #' An object of class \code{"UndPCDs"}.
-#' Returns edges of the underlying or reflexivity graph of PE-PCD
+#' Returns edges of the underlying or reflexivity graph of CS-PCD
 #' as left and right end points
 #' and related parameters and the quantities of these graphs.
 #' The vertices of these graphs are the data points in \code{Xp}
 #' in the multiple triangle case.
 #'
-#' PE proximity regions are constructed
+#' CS proximity regions are constructed
 #' with respect to the triangle \code{tri} with expansion
-#' parameter \eqn{r \ge 1}, i.e.,
+#' parameter \eqn{t > 0}, i.e.,
 #' edges may exist only for points inside \code{tri}.
 #' It also provides various descriptions
 #' and quantities about the edges of
-#' the underlying or reflexivity graph of the PE-PCD
+#' the underlying or reflexivity graphs of the CS-PCD
 #' such as number of edges, edge density, etc.
 #'
-#' Vertex regions are based on center \eqn{M=(m_1,m_2)}
+#' Edge regions are based on center \eqn{M=(m_1,m_2)}
 #' in Cartesian coordinates or \eqn{M=(\alpha,\beta,\gamma)}
 #' in barycentric coordinates in the interior of
-#' the triangle \code{tri} or based on the circumcenter of \code{tri};
+#' the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e., the center of mass of \code{tri}.
-#' When the center is the circumcenter, \code{CC},
-#' the vertex regions are constructed based on the
-#' orthogonal projections to the edges,
-#' while with any interior center \code{M},
-#' the vertex regions are constructed using the extensions
+#' With any interior center \code{M},
+#' the edge regions are constructed using the extensions
 #' of the lines combining vertices with \code{M}.
-#' The different consideration of circumcenter vs
-#' any other interior center of the triangle is because
-#' the projections from circumcenter are orthogonal to the edges,
-#' while projections of \code{M} on the edges are on the extensions
-#' of the lines connecting \code{M} and the vertices.
-#' \code{M}-vertex regions are recommended spatial inference,
-#' due to geometry invariance property of the edge density
-#' and domination number the PE-PCDs based on uniform data.
 #'
 #' See also (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
 #' @param Xp A set of 2D points
-#' which constitute the vertices of the underlying
-#' or reflexivity graph of the PE-PCD.
+#' which constitute the vertices of the underlying or reflexivity graphs of the CS-PCD.
 #' @param tri A \eqn{3 \times 2} matrix with each row
 #' representing a vertex of the triangle.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
-#' which serves as a center in the interior of the triangle \code{tri}
-#' or the circumcenter of \code{tri}
-#' which may be entered as "CC" as well;
+#' which serves as a center in the interior of the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e.,
 #' the center of mass of \code{tri}.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph,
-#' and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return A \code{list} with the elements
@@ -2206,8 +1984,9 @@ inci.mat.undPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflex
 #' or reflexivity graph of the digraph}
 #' \item{parameters}{Parameters of the underlying or reflexivity graph of the digraph,
 #' the center \code{M} used to
-#' construct the vertex regions and the expansion parameter \code{r}.}
-#' \item{tess.points}{Tessellation points, i.e., points on which the tessellation of the study region
+#' construct the edge regions and the expansion parameter \code{t}.}
+#' \item{tess.points}{Tessellation points,
+#' i.e., points on which the tessellation of the study region
 #' is performed, here, tessellation is the support triangle.}
 #' \item{tess.name}{Name of the tessellation points \code{tess.points}}
 #' \item{vertices}{Vertices of the underlying
@@ -2216,7 +1995,7 @@ inci.mat.undPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflex
 #' which constitutes the vertices of
 #' the underlying or reflexivity graph of the digraph}
 #' \item{LE, RE}{Left and right end points of the edges of
-#' the underlying or reflexivity graph of PE-PCD for 2D data set \code{Xp}
+#' the underlying or reflexivity graph of CS-PCD for 2D data set \code{Xp}
 #' as vertices of the underlying or reflexivity graph of the digraph}
 #' \item{mtitle}{Text for \code{"main"} title
 #' in the plot of the underlying or reflexivity graph of the digraph}
@@ -2225,8 +2004,8 @@ inci.mat.undPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflex
 #' number of vertices, number of partition points,
 #' number of intervals, number of edges, and edge density.}
 #'
-#' @seealso \code{\link{edgesPE}}, \code{\link{edgesAStri}}, \code{\link{edgesCStri}},
-#' and \code{\link[pcds]{arcsPEtri}}
+#' @seealso \code{\link{edgesCS}}, \code{\link{edgesAStri}}, \code{\link{edgesPEtri}},
+#' and \code{\link[pcds]{arcsCStri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -2244,49 +2023,39 @@ inci.mat.undPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflex
 #'
 #' M<-as.numeric(pcds::runif.tri(1,Tr)$g)  #try also M<-c(1.6,1.0)
 #'
-#' r<-1.5  #try also r<-2
+#' t<-1.5  #try also t<-2
 #'
 #' #for underlying graph
-#' Edges<-edgesPEtri(Xp,Tr,r,M)
-#' #or try with the default center Edges<-edgesPEtri(Xp,Tr,r); M= (Edges$param)$cent
+#' Edges<-edgesCStri(Xp,Tr,t,M)
+#' #or try with the default center Edges<-edgesCStri(Xp,Tr,t); M= (Edges$param)$cent
 #' Edges
 #' summary(Edges)
 #' plot(Edges)
 #'
 #' #for reflexivity graph
-#' Edges<-edgesPEtri(Xp,Tr,r,M,ugraph="r")
-#' #or try with the default center Edges<-edgesPEtri(Xp,Tr,r); M= (Edges$param)$cent
+#' Edges<-edgesCStri(Xp,Tr,t,M,ugraph="r")
+#' #or try with the default center Edges<-edgesCStri(Xp,Tr,t); M= (Edges$param)$cent
 #' Edges
 #' summary(Edges)
 #' plot(Edges)
 #'
-#' #can add vertex regions
-#' #but we first need to determine center is the circumcenter or not,
-#' #see the description for more detail.
-#' CC<-pcds::circumcenter.tri(Tr)
-#' if (isTRUE(all.equal(M,CC)))
-#' {cent<-CC
-#' D1<-(B+C)/2; D2<-(A+C)/2; D3<-(A+B)/2;
-#' Ds<-rbind(D1,D2,D3)
-#' cent.name<-"CC"
-#' } else
-#' {cent<-M
+#' #can add edge regions
+#' cent<-M
 #' cent.name<-"M"
 #' Ds<-pcds::prj.cent2edges(Tr,M)
-#' }
 #' L<-rbind(cent,cent,cent); R<-Ds
 #' segments(L[,1], L[,2], R[,1], R[,2], lty=2)
 #'
 #' #now we can add the vertex names and annotation
-#' txt<-rbind(Tr,cent,Ds)
+#' txr<-rbind(Tr,cent,Ds)
 #' xc<-txt[,1]+c(-.02,.02,.02,.02,.03,-.03,-.01)
 #' yc<-txt[,2]+c(.02,.02,.03,.06,.04,.05,-.07)
 #' txt.str<-c("A","B","C","M","D1","D2","D3")
 #' text(xc,yc,txt.str)
 #' }
 #'
-#' @export edgesPEtri
-edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export edgesCStri
+edgesCStri <- function(Xp,tri,t,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 {
   xname <-deparse(substitute(Xp))
   yname <-deparse(substitute(tri))
@@ -2311,24 +2080,18 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
   if (round(D0,14)==0)
   {stop('The triangle is degenerate')}
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
-  CC <- pcds::circumcenter.tri(tri)
-  if (identical(M,"CC"))
-  {M<-CC
-  } else
-  { if (!pcds::is.point(M) && !pcds::is.point(M,3))
-  {stop('M must be the circumcenter "CC" or a numeric 2D point for Cartesian coordinates or
-          3D point for barycentric coordinates')}
+  if (!(pcds::is.point(M) || pcds::is.point(M,3) ))
+  {stop('M must be a numeric 2D point for Cartesian coordinates or
+  3D point for barycentric coordinates ')}
 
   if (pcds::dimension(M)==3)
   {M<-pcds::bary2cart(M,tri)}
 
-  if (!(isTRUE(all.equal(M,CC)) ||
-        pcds::in.triangle(M,tri,boundary=FALSE)$in.tri))
-  {stop('M is not the circumcenter or not a center in the interior of the triangle')}
-  }
+  if (!(pcds::in.triangle(M,tri,boundary=FALSE)$in.tri))
+   {stop('M is not a center in the interior of the triangle')}
 
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
@@ -2343,7 +2106,7 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
   Xtri<-Xp[in.tri==1,] #the Xp points inside the triangle
   n2<-length(Xtri)/2
 
-  #the edges of the underlying or reflexivity graph of PE-PCDs
+  #the edges of the underlying or reflexivity graphs of CS-PCDs
   lep<-rep<-NULL #left and right end points for the edges
   if (n2>1)
   {
@@ -2353,7 +2116,7 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
       for (k in (j+1):n2)  #to avoid loops
       {
         p2<-Xtri[k,];
-        if (IedgePEtri(p1,p2,tri,r,M,ugraph)==1)
+        if (IedgeCStri(p1,p2,tri,t,M,ugraph)==1)
         {
           lep <-rbind(lep,p1); rep <-rbind(rep,p2);
         }
@@ -2361,22 +2124,12 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
     }
   }
 
-  param<-list(M,r)
+  param<-list(M,t)
   Mr<-round(M,2)
-
-  if (identical(M,"CC") || isTRUE(all.equal(M,CC)))
-  {
-    cname <-"CC"
-    names(param)<-c("circumcenter","expansion parameter")
-    main.txt<-paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD with r = ",r," and Circumcenter",sep="")
-    typ<-paste(ifelse(ugraph=="underlying","Underlying", "Reflexivity")," Graph of Proportional Edge Proximity Catch Digraph (PE-PCD) for 2D Points in the Triangle with Expansion Parameter r = ",r," and Circumcenter",sep="")
-  } else
-  {
-    cname <-"M"
-    names(param)<-c("center","expansion parameter")
-    main.txt<-paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD with r = ",r," and Center ", cname," = (",Mr[1],",",Mr[2],")",sep="")
-    typ<-paste(ifelse(ugraph=="underlying","Underlying", "Reflexivity")," Graph of Proportional Edge Proximity Catch Digraph (PE-PCD) for 2D Points in the Triangle with Expansion Parameter r = ",r," and Center ", cname," = (",Mr[1],",",Mr[2],")",sep="")
-  }
+  cname <-"M"
+  names(param)<-c("center","expansion parameter")
+  main.txt<-paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of CS-PCD with t = ",t," and Center ", cname," = (",Mr[1],",",Mr[2],")",sep="")
+  typ<-paste(ifelse(ugraph=="underlying","Underlying", "Reflexivity")," Graph of Central Similarity Proximity Catch Digraph (CS-PCD) for 2D Points in the Triangle with Expansion Parameter t = ",t," and Center ", cname," = (",Mr[1],",",Mr[2],")",sep="")
 
   nvert<-n2; ny<-3; ntri<-1;
   nedges=ifelse(!is.null(lep),
@@ -2410,53 +2163,43 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 
 #################################################################
 
-#' @title The plot of the edges of the underlying or reflexivity graph of
-#' the Proportional Edge Proximity Catch Digraph
-#' (PE-PCD) for 2D data - one triangle case
+#' @title The plot of the edges of the underlying or reflexivity graphs of
+#' the Central Similarity Proximity Catch Digraph
+#' (CS-PCD) for 2D data - one triangle case
 #'
-#' @description Plots the edges of the underlying or reflexivity graph of
-#' the Proportional Edge Proximity Catch Digraph
-#' (PE-PCD) whose vertices are the data points, \code{Xp}
+#' @description Plots the edges of the underlying or reflexivity graphs of
+#' the Central Similarity Proximity Catch Digraph
+#' (CS-PCD) whose vertices are the data points, \code{Xp}
 #' and the triangle \code{tri}.
-#' PE proximity regions
+#' CS proximity regions
 #' are constructed with respect to the triangle \code{tri}
-#' with expansion parameter \eqn{r \ge 1},
+#' with expansion parameter \eqn{t > 0},
 #' i.e., edges may exist only for \code{Xp} points inside the triangle \code{tri}.
 #'
-#' Vertex regions are based on center \eqn{M=(m_1,m_2)}
+#' Edge regions are based on center \eqn{M=(m_1,m_2)}
 #' in Cartesian coordinates
 #' or \eqn{M=(\alpha,\beta,\gamma)} in barycentric coordinates
-#' in the interior of the triangle \code{tri}
-#' or based on the circumcenter of \code{tri};
+#' in the interior of the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e.,
 #' the center of mass of \code{tri}.
-#' When the center is the circumcenter, \code{CC},
-#' the vertex regions are constructed based on the
-#' orthogonal projections to the edges,
-#' while with any interior center \code{M},
-#' the vertex regions are constructed using the extensions
+#' With any interior center \code{M},
+#' the edge regions are constructed using the extensions
 #' of the lines combining vertices with \code{M}.
-#' \code{M}-vertex regions are recommended spatial inference,
-#' due to geometry invariance property of the edge density
-#' and domination number the PE-PCDs based on uniform data.
 #'
 #' See also (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph}).
 #'
 #' @param Xp A set of 2D points
 #' which constitute the vertices of the underlying
-#' or reflexivity graphs of the PE-PCD.
+#' or reflexivity graphs of the CS-PCD.
 #' @param tri A \eqn{3 \times 2} matrix with each row
 #' representing a vertex of the triangle.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 2D point in Cartesian coordinates
 #' or a 3D point in barycentric coordinates
-#' which serves as a center in the interior of the triangle \code{tri}
-#' or the circumcenter of \code{tri}
-#' which may be entered as "CC" as well;
+#' which serves as a center in the interior of the triangle \code{tri};
 #' default is \eqn{M=(1,1,1)}, i.e., the center of mass of \code{tri}.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #' @param asp A \code{numeric} value,
@@ -2469,17 +2212,17 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' @param xlim,ylim Two \code{numeric} vectors of length 2,
 #' giving the \eqn{x}- and \eqn{y}-coordinate ranges
 #' (default=\code{NULL} for both).
-#' @param vert.reg A logical argument to add vertex regions to the plot,
-#' default is \code{vert.reg=FALSE}.
+#' @param edge.reg A logical argument to add edge regions to the plot,
+#' default is \code{edge.reg=FALSE}.
 #' @param \dots	Additional \code{plot} parameters.
 #'
 #' @return A plot of the edges of the underlying
-#' or reflexivity graphs of the PE-PCD
+#' or reflexivity graphs of the CS-PCD
 #' whose vertices are the points in data set \code{Xp}
 #' and the triangle \code{tri}
 #'
-#' @seealso \code{\link{plotPEedges}}, \code{\link{plotASedges.tri}},
-#' \code{\link{plotCSedges.tri}}, and \code{\link[pcds]{plotPEarcs.tri}}
+#' @seealso \code{\link{plotCSedges}}, \code{\link{plotASedges.tri}},
+#' \code{\link{plotPEedges.tri}}, and \code{\link[pcds]{plotCSarcs.tri}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -2496,22 +2239,20 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' Xp<-pcds::runif.tri(n,Tr)$g
 #'
 #' M<-as.numeric(pcds::runif.tri(1,Tr)$g)
-#' #try also M<-c(1.6,1.0) or M<-pcds::circumcenter.tri(Tr)
-#' r<-1.5  #try also r<-2
-#' plotPEedges.tri(Xp,Tr,r,M,vert.reg = TRUE,xlab="",ylab="")
-#' plotPEedges.tri(Xp,Tr,r,M,ugraph="r",vert.reg = TRUE,xlab="",ylab="")
+#' #try also M<-c(1.6,1.0)
+#' t<-1.5  #try also t<-2
+#' plotCSedges.tri(Xp,Tr,t,M,edge.reg = TRUE,xlab="",ylab="")
+#' plotCSedges.tri(Xp,Tr,t,M,ugraph="r",edge.reg = TRUE,xlab="",ylab="")
 #'
 #' # or try the default center
-#' #plotPEedges.tri(Xp,Tr,r,main="Edges of PE-PCD with r = 1.5",
-#' #xlab="",ylab="",vert.reg = TRUE);
-#' #M=(edgesPEtri(Xp,Tr,r)$param)$cent
-#' #the part "M=(edgesPEtri(Xp,Tr,r)$param)$cent" is optional,
+#' #plotCSedges.tri(Xp,Tr,t,main="Edges of CS-PCD with t = 1.5",
+#' #xlab="",ylab="",edge.reg = TRUE);
+#' #M=(edgesCStri(Xp,Tr,t)$param)$cent
+#' #the part "M=(edgesCStri(Xp,Tr,t)$param)$cent" is optional,
 #' #for the below annotation of the plot
 #'
-#' #can add vertex labels and text to the figure (with vertex regions)
-#' ifelse(isTRUE(all.equal(M,pcds::circumcenter.tri(Tr))),
-#' {Ds<-rbind((B+C)/2,(A+C)/2,(A+B)/2); cent.name="CC"},
-#' {Ds<-pcds::prj.cent2edges(Tr,M); cent.name="M"})
+#' #can add vertex labels and text to the figure (with edge regions)
+#' Ds<-pcds::prj.cent2edges(Tr,M); cent.name="M"
 #'
 #' txt<-rbind(Tr,M,Ds)
 #' xc<-txt[,1]+c(-.02,.02,.02,.02,.04,-0.03,-.01)
@@ -2520,10 +2261,10 @@ edgesPEtri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 #' text(xc,yc,txt.str)
 #' }
 #'
-#' @export plotPEedges.tri
-plotPEedges.tri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"),
+#' @export plotCSedges.tri
+plotCSedges.tri <- function(Xp,tri,t,M=c(1,1,1),ugraph=c("underlying", "reflexivity"),
                                asp=NA,main=NULL,xlab=NULL,ylab=NULL,
-                           xlim=NULL,ylim=NULL,vert.reg=FALSE,...)
+                               xlim=NULL,ylim=NULL,edge.reg=FALSE,...)
 {
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
@@ -2534,10 +2275,9 @@ plotPEedges.tri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexiv
   warning("There were duplicate Xp values;
           only one value is kept for each duplicate Xp value (to avoid edges of zero length)!")}
 
-  EdgesPE<-edgesPEtri(Xp,tri,r,M,ugraph)
-  lep<-EdgesPE$LE; rep<-EdgesPE$RE
-  #lep, rep are left and right end points of the edges of the graph
-  cent = (EdgesPE$param)$c
+  EdgesCS<-edgesCStri(Xp,tri,t,M,ugraph)
+  lep<-EdgesCS$LE; rep<-EdgesCS$RE #lep, rep are left and right end points of the edges of the graph
+  cent = (EdgesCS$param)$c
 
   Xp<-matrix(Xp,ncol=2)
   if (is.null(xlim))
@@ -2545,30 +2285,22 @@ plotPEedges.tri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexiv
   if (is.null(ylim))
   {ylim<-range(tri[,2],Xp[,2],cent[2])}
 
-  if ( isTRUE(all.equal(cent,pcds::circumcenter.tri(tri))) )
-  {M="CC"}
-
   if (is.null(main))
-  {if (identical(M,"CC")){
-  main=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD\n with r = ",r," and Circumcenter",sep="")
-  } else {Mr=round(cent,2)
+  {Mr=round(cent,2)
   Mvec= paste(Mr, collapse=",")
-  main=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD\n with r = ",r," and M = (",Mvec,")",sep="")}
+  main=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of CS-PCD\n with t = ",t," and M = (",Mvec,")",sep="")
   }
 
-  if (vert.reg)
-  {main=c(main,"\n (vertex regions added)")}
+  if (edge.reg)
+  {main=c(main,"\n (edge regions added)")}
 
   plot(Xp,main=main,asp=asp, xlab=xlab, ylab=ylab,
        xlim=xlim,ylim=ylim,pch=".",cex=3,...)
   polygon(tri,...)
   if (!is.null(lep)) {segments(lep[,1], lep[,2], rep[,1], rep[,2], col= 4)}
 
-  if (vert.reg){
-    ifelse(isTRUE(all.equal(cent,pcds::circumcenter.tri(tri))),
-           {A=tri[1,];B=tri[2,];C=tri[3,];
-           Ds<-rbind((B+C)/2,(A+C)/2,(A+B)/2)},
-           Ds<-pcds::prj.cent2edges(tri,M))
+  if (edge.reg){
+    Ds<-pcds::prj.cent2edges(tri,M)
     L<-rbind(cent,cent,cent); R<-Ds
     segments(L[,1], L[,2], R[,1], R[,2], lty=2)
   }
@@ -2577,33 +2309,27 @@ plotPEedges.tri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexiv
 
 #################################################################
 
-#' @title The edges of the underlying or reflexivity graph of
-#' the Proportional Edge Proximity Catch Digraph
-#' (PE-PCD) for 2D data - multiple triangle case
+#' @title The edges of the underlying or reflexivity graphs of
+#' the Central Similarity Proximity Catch Digraph
+#' (CS-PCD) for 2D data - multiple triangle case
 #'
 #' @description
 #' An object of class \code{"UndPCDs"}.
-#' Returns edges of the underlying or reflexivity graph of PE-PCD
+#' Returns edges of the underlying or reflexivity graph of CS-PCD
 #' as left and right end points
 #' and related parameters and the quantities of these graphs.
 #' The vertices of these graphs are the data points in \code{Xp}
 #' in the multiple triangle case.
 #'
-#' PE proximity regions are defined
-#' with respect to the Delaunay triangles
-#' based on \code{Yp} points with expansion parameter \eqn{r \ge 1} and
-#' vertex regions in each triangle are
+#' CS proximity regions are
+#' defined with respect to the Delaunay triangles
+#' based on \code{Yp} points with expansion parameter \eqn{t > 0} and
+#' edge regions in each triangle are
 #' based on the center \eqn{M=(\alpha,\beta,\gamma)}
 #' in barycentric coordinates
-#' in the interior of each Delaunay triangle or
-#' based on circumcenter of each Delaunay triangle
+#' in the interior of each Delaunay triangle
 #' (default for \eqn{M=(1,1,1)}
 #' which is the center of mass of the triangle).
-#' The different consideration of circumcenter vs
-#' any other interior center of the triangle is because
-#' the projections from circumcenter are orthogonal to the edges,
-#' while projections of \code{M} on the edges are on the extensions
-#' of the lines connecting \code{M} and the vertices.
 #' Each Delaunay triangle is first converted to
 #' an (nonscaled) basic triangle so that \code{M} will be the same
 #' type of center for each Delaunay triangle
@@ -2618,54 +2344,53 @@ plotPEedges.tri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexiv
 #' for points inside the convex hull of \code{Yp} points.
 #'
 #' See (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph})
-#' for more on the PE-PCDs.
+#' for more on the CS-PCDs.
 #' Also, see (\insertCite{okabe:2000,ceyhan:comp-geo-2010,sinclair:2016;textual}{pcds.ugraph})
 #' for more on Delaunay triangulation and the corresponding algorithm.
 #'
 #' @param Xp A set of 2D points
-#' which constitute the vertices of the underlying or reflexivity graph of the PE-PCD.
+#' which constitute the vertices of the underlying
+#' or reflexivity graphs of the CS-PCD.
 #' @param Yp A set of 2D points
 #' which constitute the vertices of the Delaunay triangles.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 3D point in barycentric coordinates
-#' which serves as a center in the interior of each Delaunay
-#' triangle or circumcenter of each Delaunay triangle
-#' (for this, argument should be set as \code{M="CC"}),
+#' which serves as a center in the interior of each Delaunay triangle,
 #' default for \eqn{M=(1,1,1)}
 #' which is the center of mass of each triangle.
-#' @param ugraph The type of the graph based on PE-PCDs,
+#' @param ugraph The type of the graph based on CS-PCDs,
 #' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
 #' @return A \code{list} with the elements
 #' \item{type}{A description of the underlying
 #' or reflexivity graph of the digraph}
-#' \item{parameters}{Parameters of the underlying
-#' or reflexivity graph of the digraph,
+#' \item{parameters}{Parameters of
+#' the underlying or reflexivity graph of the digraph,
 #' the center \code{M} used to
-#' construct the vertex regions and the expansion parameter \code{r}.}
+#' construct the edge regions and the expansion parameter \code{t}.}
 #' \item{tess.points}{Tessellation points, i.e., points on which the tessellation
 #' of the study region is performed, here, tessellation
 #' is Delaunay triangulation based on \code{Yp} points.}
 #' \item{tess.name}{Name of the tessellation points \code{tess.points}}
-#' \item{vertices}{Vertices of the underlying
-#' or reflexivity graph of the digraph, \code{Xp} points}
+#' \item{vertices}{Vertices of the underlying and
+#' reflexivity graph of the digraph, \code{Xp} points}
 #' \item{vert.name}{Name of the data set
-#' which constitute the vertices of the underlying
-#' or reflexivity graph of the digraph}
+#' which constitute the vertices of
+#' the underlying or reflexivity graph of the digraph}
 #' \item{LE, RE}{Left and right end points of the edges of
-#' the underlying or reflexivity graph of PE-PCD for 2D data set \code{Xp}
+#' the underlying or reflexivity graph of CS-PCD for 2D data set \code{Xp}
 #' as vertices of the underlying or reflexivity graph of the digraph}
 #' \item{mtitle}{Text for \code{"main"} title
 #' in the plot of the underlying or reflexivity graph of the digraph}
-#' \item{quant}{Various quantities for the underlying or reflexivity graph of the digraph:
+#' \item{quant}{Various quantities for
+#' the underlying or reflexivity graph of the digraph:
 #' number of vertices, number of partition points,
 #' number of intervals, number of edges, and edge density.}
 #'
-#' @seealso \code{\link{edgesPEtri}}, \code{\link{edgesAS}}, \code{\link{edgesCS}},
-#' and \code{\link[pcds]{arcsPE}}
+#' @seealso \code{\link{edgesCStri}}, \code{\link{edgesAS}}, \code{\link{edgesPE}},
+#' and \code{\link[pcds]{arcsCS}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -2684,19 +2409,25 @@ plotPEedges.tri <- function(Xp,tri,r,M=c(1,1,1),ugraph=c("underlying", "reflexiv
 #'
 #' M<-c(1,1,1)  #try also M<-c(1,2,3)
 #'
-#' r<-1.5  #try also r<-2
+#' t<-1.5  #try also t<-2
 #'
-#' Edges<-edgesPE(Xp,Yp,r,M) #try also Edges<-edgesPE(Xp,Yp,r,M,ugraph="r")
-#' #or try with the default center Edges<-edgesPE(Xp,Yp,r)
+#' Edges<-edgesCS(Xp,Yp,t,M)
+#' #or try with the default center Edges<-edgesCS(Xp,Yp,t)
+#' Edges
+#' summary(Edges)
+#' plot(Edges)
+#'
+#' Edges<-edgesCS(Xp,Yp,t,M,ugraph="r")
+#' #or try with the default center Edges<-edgesCS(Xp,Yp,t)
 #' Edges
 #' summary(Edges)
 #' plot(Edges)
 #' }
 #'
-#' @export edgesPE
-edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export edgesCS
+edgesCS <- function(Xp,Yp,t,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 {
-  xname <-deparse(substitute(Xp))
+  xname <-deparse(substitute(Xp));
   yname <-deparse(substitute(Yp))
 
   if (!is.numeric(as.matrix(Xp)) || !is.numeric(as.matrix(Yp)))
@@ -2714,8 +2445,8 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
   if (ncol(Yp)!=2 || nrow(Yp)<3)
   {stop('Yp must be of dimension kx2 with k>=3')}
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
@@ -2723,12 +2454,11 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 
   if (nrow(Yp)==3)
   {
-    res<-edgesPEtri(Xp,Yp,r,M,ugraph)
+    res<-edgesCStri(Xp,Yp,t,M,ugraph)
   } else
   {
-    if ((!pcds::is.point(M,3) && M!="CC") || !all(M>0))
-    {stop('M must be a numeric 3D point with positive barycentric coordinates or
-          "CC" for circumcenter')}
+    if ((!pcds::is.point(M,3) ) || !all(M>0))
+    {stop('M must be a numeric 3D point with positive barycentric coordinates')}
 
     DTmesh<-interp::tri.mesh(Yp[,1],Yp[,2],duplicate="remove")
 
@@ -2763,16 +2493,12 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
         {
           Yi.Tri<-Yp[DTr[i,],] #vertices of the ith triangle
           Yi.tri<-pcds::as.basic.tri(Yi.Tri)$tri
-          #convert the triangle Yi.Tri into an nonscaled basic triangle,
-          #see as.basic.tri help page
+          #convert the triangle Yi.Tri into an nonscaled basic triangle, see as.basic.tri help page
 
-          ifelse(identical(M,"CC"),
-                cent<-pcds::circumcenter.tri(Yi.tri),
-                cent<-M)
-          nl<-nrow(Xl)
+          nl<-nrow(Xl) ; cent<-M
           for (j in 1:(nl-1))
           { for (k in (j+1):nl)  #to avoid loops
-            if (IedgePEtri(Xl[j,],Xl[k,],Yi.tri,r,cent,ugraph)==1 )
+            if (IedgeCStri(Xl[j,],Xl[k,],Yi.tri,t,cent,ugraph)==1 )
             {
               lep <-rbind(lep,Xl[j,]); rep <-rbind(rep,Xl[k,]);
             }
@@ -2781,16 +2507,13 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
       }
     }
 
-    cname <-ifelse(identical(M,"CC"),"CC","M")
-    param<-list(M,r)
+    cname <-"M"
+    param<-list(M,t)
     names(param)<-c("center","expansion parameter")
 
-    if (identical(M,"CC")){
-      main.txt=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD\n with r = ",r," and Circumcenter",sep="")
-      typ<-paste(ifelse(ugraph=="underlying","Underlying", "Reflexivity")," Graph of Proportional Edge Proximity Catch Digraph (PE-PCD) for 2D points in Multiple Triangles with Expansion Parameter r = ",r," and Circumcenter",sep="")
-    } else {Mvec= paste(M, collapse=",")
-    main.txt=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD\n with r = ",r," and Center ", cname," = (",Mvec,")",sep="")
-    typ<-paste(ifelse(ugraph=="underlying","Underlying", "Reflexivity")," Graph of Proportional Edge Proximity Catch Digraph (PE-PCD) for 2D points in Multiple Triangles with Expansion parameter r = ",r," and Center ", cname," = (",Mvec,")",sep="")}
+    Mvec= paste(M, collapse=",")
+    main.txt=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of CS-PCD\n with t = ",t," and Center ", cname," = (",Mvec,")",sep="")
+    typ<-paste(ifelse(ugraph=="underlying","Underlying", "Reflexivity")," Graph of Central Similarity Proximity Catch Digraph (CS-PCD) for 2D points in Multiple Triangles with Expansion parameter t = ",t," and Center ", cname," = (",Mvec,")",sep="")
 
     nvert<-nx2; ny<-nrow(Yp); ntri<-nt;
     nedges=ifelse(!is.null(lep),
@@ -2808,8 +2531,7 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
       type=typ,
       parameters=param,
       tess.points=Yp, tess.name=yname, #tessellation points
-      vertices=Xp, vert.name=xname,
-      #vertices of the underlying or reflexivity graph of the digraph
+      vertices=Xp, vert.name=xname, #vertices of the underlying or reflexivity graph of the digraph
       LE=lep, RE=rep,
       mtitle=main.txt,
       quant=quantities,
@@ -2825,23 +2547,22 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 
 #################################################################
 
-#' @title Incidence matrix for the underlying or reflexivity graph of
-#' Proportional Edge Proximity Catch Digraphs (PE-PCDs) -
+#' @title Incidence matrix for the underlying or reflexivity graphs of
+#' Central Similarity Proximity Catch Digraphs (CS-PCDs) -
 #' multiple triangle case
 #'
 #' @description Returns the incidence matrix
-#' for the underlying or reflexivity graph of the PE-PCD
+#' for the underlying or reflexivity graphs of the CS-PCD
 #' whose vertices are the data points in \code{Xp}
 #' in the multiple triangle case.
 #'
-#' PE proximity regions are
+#' CS proximity regions are
 #' defined with respect to the Delaunay triangles
-#' based on \code{Yp} points with expansion parameter \eqn{r \ge 1} and
-#' vertex regions in each triangle are
+#' based on \code{Yp} points with expansion parameter \eqn{t > 0} and
+#' edge regions in each triangle are
 #' based on the center \eqn{M=(\alpha,\beta,\gamma)}
 #' in barycentric coordinates
 #' in the interior of each Delaunay triangle
-#' or based on circumcenter of each Delaunay triangle
 #' (default for \eqn{M=(1,1,1)}
 #' which is the center of mass of the triangle).
 #'
@@ -2859,34 +2580,32 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 #' so the diagonal entries are all equal to 1.
 #'
 #' See (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph})
-#' for more on the PE-PCDs.
+#' for more on the CS-PCDs.
 #' Also, see (\insertCite{okabe:2000,ceyhan:comp-geo-2010,sinclair:2016;textual}{pcds.ugraph})
 #' for more on Delaunay triangulation and the corresponding algorithm.
 #'
 #' @param Xp A set of 2D points
-#' which constitute the vertices of the underlying or reflexivity graph of the PE-PCD.
+#' which constitute the vertices of the underlying or reflexivity graphs of the CS-PCD.
 #' @param Yp A set of 2D points
 #' which constitute the vertices of the Delaunay triangles.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 3D point in barycentric coordinates
-#' which serves as a center in the interior of each Delaunay
-#' triangle or circumcenter of each Delaunay triangle
-#' (for this, argument should be set as \code{M="CC"}),
+#' which serves as a center in the interior of each Delaunay triangle,
 #' default for \eqn{M=(1,1,1)}
 #' which is the center of mass of each triangle.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph,
+#' and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #'
-#' @return Incidence matrix for the underlying or reflexivity graph
-#' of the PE-PCD whose vertices are the 2D data set, \code{Xp}.
-#' PE proximity regions are constructed
-#' with respect to the Delaunay triangles and \code{M}-vertex regions.
+#' @return Incidence matrix for the underlying or reflexivity graphs
+#' of the CS-PCD  whose vertices are the 2D data set, \code{Xp}.
+#' CS proximity regions are constructed
+#' with respect to the Delaunay triangles and \code{M}-edge regions.
 #'
-#' @seealso \code{\link{inci.mat.undPEtri}}, \code{\link{inci.mat.undAS}},
-#' \code{\link{inci.mat.undCS}}, and \code{\link[pcds]{inci.matPE}}
+#' @seealso \code{\link{inci.mat.undCStri}}, \code{\link{inci.mat.undAS}},
+#' \code{\link{inci.mat.undPE}}, and \code{\link[pcds]{inci.matCS}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -2905,9 +2624,10 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 #'
 #' M<-c(1,1,1)  #try also M<-c(1,2,3)
 #'
-#' r<-1.5  #try also r<-2
+#' t<-1.5  #try also t<-2
 #'
-#' IM<-inci.mat.undPE(Xp,Yp,r,M) #try also IM<-inci.mat.undPE(Xp,Yp,r,M,ugraph="r")
+#' IM<-inci.mat.undCS(Xp,Yp,t,M)
+#' #try also IM<-inci.mat.undCS(Xp,Yp,t,M,ugraph="r")
 #' IM
 #' pcds::dom.num.greedy(IM)
 #' #try also pcds::dom.num.exact(IM)
@@ -2915,8 +2635,9 @@ edgesPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
 #' #disconnected nature of the digraph inherent by the geometric construction of it
 #' }
 #'
-#' @export inci.mat.undPE
-inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"))
+#' @export inci.mat.undCS
+inci.mat.undCS <- function(Xp,Yp,t,M=c(1,1,1),
+                           ugraph=c("underlying", "reflexivity"))
 {
   if (!is.numeric(as.matrix(Xp)) || !is.numeric(as.matrix(Yp)))
   {stop('Xp and Yp must be numeric')}
@@ -2933,8 +2654,8 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
   if (ncol(Yp)!=2 || nrow(Yp)<3)
   {stop('Yp must be of dimension kx2 with k>=3')}
 
-  if (!pcds::is.point(r,1) || r<1)
-  {stop('r must be a scalar >= 1')}
+  if (!pcds::is.point(t,1) || t<=0)
+  {stop('t must be a scalar > 0')}
 
   ugraph <- match.arg(ugraph)
   if (length(ugraph) > 1 || is.na(ugraph))
@@ -2942,12 +2663,11 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 
   if (nrow(Yp)==3)
   {
-    inc.mat<-inci.mat.undPEtri(Xp,Yp,r,M,ugraph)
+    inc.mat<-inci.mat.undCStri(Xp,Yp,t,M,ugraph)
   } else
   {
-    if ((!pcds::is.point(M,3) && M!="CC") || !all(M>0))
-    {stop('M must be a numeric 3D point with positive barycentric coordinates
-          or "CC" for circumcenter')}
+    if ((!pcds::is.point(M,3) ) || !all(M>0))
+    {stop('M must be a numeric 3D point with positive barycentric coordinates')}
 
     DTmesh<-interp::tri.mesh(Yp[,1],Yp[,2],duplicate="remove")
 
@@ -2962,7 +2682,7 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
     nt<-nrow(DTr)  #number of Delaunay triangles
 
    # if (nx>1)
-  #  {
+   # {
       i.tr<-rep(0,nx)  #the vector of indices for the triangles that contain the Xp points
       for (i in 1:nx)
         for (j in 1:nt)
@@ -2972,6 +2692,7 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
             i.tr[i]<-j
         }
 
+      cent<-M
       for (i in 1:nx)
       { p1<-Xp[i,]
       Yi.tri<-Yp[DTr[1,],]
@@ -2980,20 +2701,15 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
       {
         Yi.Tri<-Yp[DTr[i.tr[i],],] #vertices of the ith triangle
         Yi.tri<-pcds::as.basic.tri(Yi.Tri)$tri
-        #convert the triangle Yi.Tri into an nonscaled basic triangle,
-        #see as.basic.tri help page
+        #convert the triangle Yi.Tri into an nonscaled basic triangle, see as.basic.tri help page
       }
-      ifelse(identical(M,"CC"),
-               cent<-pcds::circumcenter.tri(Yi.tri),
-               cent<-M)
-
-        for (j in i:nx )
-        {p2<-Xp[j,]
-        inc.mat[i,j]<-inc.mat[j,i]<-IedgePEtri(p1,p2,Yi.tri,r,cent,ugraph)
-        }
-     # }
+      for (j in i:nx )
+      {p2<-Xp[j,]
+      inc.mat[i,j]<-inc.mat[j,i]<-IedgeCStri(p1,p2,Yi.tri,t,cent,ugraph)
       }
-    #}
+      # }
+      }
+      # }
 
     #diag(inc.mat)<-1
   }
@@ -3003,28 +2719,27 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 
 #################################################################
 
-#' @title The plot of the edges of the underlying or reflexivity graph of
-#' the Proportional Edge Proximity Catch Digraph
-#' (PE-PCD) for 2D data - multiple triangle case
+#' @title The plot of the edges of the underlying or reflexivity graphs of
+#' the Central Similarity Proximity Catch Digraph
+#' (CS-PCD) for 2D data - multiple triangle case
 #'
-#' @description Plots the edges of the underlying or reflexivity graph of
-#' the Proportional Edge Proximity Catch Digraph
-#' (PE-PCD) whose vertices are the data
+#' @description Plots the edges of the underlying or reflexivity graphs of
+#' the Central Similarity Proximity Catch Digraph
+#' (CS-PCD) whose vertices are the data
 #' points in \code{Xp} in the multiple triangle case
 #' and the Delaunay triangles based on \code{Yp} points.
 #'
-#' PE proximity regions are constructed
+#' CS proximity regions are constructed
 #' with respect to the Delaunay triangles based on \code{Yp} points, i.e.,
-#' PE proximity regions are defined only for \code{Xp} points
+#' CS proximity regions are defined only for \code{Xp} points
 #' inside the convex hull of \code{Yp} points.
 #' That is, edges may exist for \code{Xp} points
 #' only inside the convex hull of \code{Yp} points.
 #'
-#' Vertex regions in each triangle are
+#' Edge regions in each triangle are
 #' based on the center \eqn{M=(\alpha,\beta,\gamma)}
 #' in barycentric coordinates in the interior of each Delaunay triangle
-#' or based on circumcenter of
-#' each Delaunay triangle (default for \eqn{M=(1,1,1)}
+#' (default for \eqn{M=(1,1,1)}
 #' which is the center of mass of the triangle).
 #'
 #' Convex hull of \code{Yp} is partitioned by
@@ -3036,27 +2751,23 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 #' for points inside the convex hull of \code{Yp} points.
 #'
 #' See (\insertCite{ceyhan:Phd-thesis,ceyhan:stamet2016;textual}{pcds.ugraph})
-#' for more on the PE-PCDs.
+#' for more on the CS-PCDs.
 #' Also, see (\insertCite{okabe:2000,ceyhan:comp-geo-2010,sinclair:2016;textual}{pcds.ugraph})
 #' for more on Delaunay triangulation and the corresponding algorithm.
 #'
 #' @param Xp A set of 2D points
 #' which constitute the vertices of the underlying
-#' or reflexivity graphs of the PE-PCD.
+#' or reflexivity graphs of the CS-PCD.
 #' @param Yp A set of 2D points
 #' which constitute the vertices of the Delaunay triangles.
-#' @param r A positive real number
-#' which serves as the expansion parameter in PE proximity region;
-#' must be \eqn{\ge 1}.
+#' @param t A positive real number
+#' which serves as the expansion parameter in CS proximity region.
 #' @param M A 3D point in barycentric coordinates
-#' which serves as a center in the interior of each Delaunay
-#' triangle or circumcenter of each Delaunay triangle
-#' (for this, argument should be set as \code{M="CC"}),
+#' which serves as a center in the interior of each Delaunay triangle,
 #' default for \eqn{M=(1,1,1)}
 #' which is the center of mass of each triangle.
-#' @param ugraph The type of the graph based on PE-PCDs,
-#' \code{"underlying"} is for the underlying graph,
-#' and \code{"reflexivity"} is for
+#' @param ugraph The type of the graph based on CS-PCDs,
+#' \code{"underlying"} is for the underlying graph, and \code{"reflexivity"} is for
 #' the reflexivity graph (default is \code{"underlying"}).
 #' @param asp A \code{numeric} value,
 #' giving the aspect ratio \eqn{y/x} (default is \code{NA}),
@@ -3070,12 +2781,12 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 #' @param \dots Additional \code{plot} parameters.
 #'
 #' @return A plot of the edges of the underlying
-#' or reflexivity graphs of the PE-PCD
+#' or reflexivity graphs of the CS-PCD
 #' whose vertices are the points in data set \code{Xp} and the Delaunay
 #' triangles based on \code{Yp} points
 #'
-#' @seealso \code{\link{plotPEedges.tri}}, \code{\link{plotASedges}},
-#' \code{\link{plotCSedges}}, and \code{\link[pcds]{plotPEarcs}}
+#' @seealso \code{\link{plotCSedges.tri}}, \code{\link{plotASedges}},
+#' \code{\link{plotPEedges}}, and \code{\link[pcds]{plotCSarcs}}
 #'
 #' @references
 #' \insertAllCited{}
@@ -3095,14 +2806,14 @@ inci.mat.undPE <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivit
 #'
 #' M<-c(1,1,1)  #try also M<-c(1,2,3)
 #'
-#' r<-1.5  #try also r<-2
+#' t<-1.5  #try also t<-2
 #'
-#' plotPEedges(Xp,Yp,r,M,xlab="",ylab="")
-#' plotPEedges(Xp,Yp,r,M,xlab="",ylab="",ugraph="r")
+#' plotCSedges(Xp,Yp,t,M,xlab="",ylab="")
+#' plotCSedges(Xp,Yp,t,M,xlab="",ylab="",ugraph="r")
 #' }
 #'
-#' @export plotPEedges
-plotPEedges <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity"),
+#' @export plotCSedges
+plotCSedges <- function(Xp,Yp,t,M=c(1,1,1),ugraph=c("underlying", "reflexivity"),
                            asp=NA,main=NULL,xlab=NULL,ylab=NULL,
                            xlim=NULL,ylim=NULL,...)
 {
@@ -3122,20 +2833,18 @@ plotPEedges <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
 
   if (nrow(Yp)==3)
   {
-    plotPEedges.tri(Xp,Yp,r,M,ugraph,asp,main,xlab,ylab,xlim,ylim)
+    plotCSedges.tri(Xp,Yp,t,M,ugraph,asp,main,xlab,ylab,xlim,ylim)
   } else
   {
-    EdgesPE<-edgesPE(Xp,Yp,r,M,ugraph)
-    lep<-EdgesPE$LE; rep<-EdgesPE$RE
+    EdgesCS<-edgesCS(Xp,Yp,t,M,ugraph)
+    lep<-EdgesCS$LE; rep<-EdgesCS$RE
 
     DTmesh<-interp::tri.mesh(Yp[,1],Yp[,2],duplicate="remove")
     Xch<-pcds::Xin.convex.hullY(Xp,Yp)
 
     if (is.null(main))
-    {if (identical(M,"CC")){
-      main=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD\n with r = ",r," and Circumcenter",sep="")
-    } else {Mvec= paste(M, collapse=",")
-    main=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of PE-PCD\n with r = ",r," and M = (",Mvec,")",sep="")}
+    {Mvec= paste(M, collapse=",")
+    main=paste("Edges of ", ifelse(ugraph=="underlying","Underlying", "Reflexivity"), " Graph of CS-PCD\n with t = ",t," and M = (",Mvec,")",sep="")
     }
 
     Xlim<-xlim; Ylim<-ylim
@@ -3156,3 +2865,4 @@ plotPEedges <- function(Xp,Yp,r,M=c(1,1,1),ugraph=c("underlying", "reflexivity")
     if (!is.null(lep)) {segments(lep[,1], lep[,2], rep[,1], rep[,2], col= 4)}
   }
 } #end of the function
+
