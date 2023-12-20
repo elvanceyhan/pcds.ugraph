@@ -16,6 +16,8 @@ Description: Contains the functions for construction and visualization of underl
             The package also has tools for visualization of PCD-based graphs for one, two, and three dimensional data. 
 License: GPL-2
 Encoding: UTF-8
+URL: https://github.com/elvanceyhan/pcds.ugraph
+BugReports: https://github.com/elvanceyhan/pcds.ugraph/issues
 Imports: 
     pcds,
     interp,
